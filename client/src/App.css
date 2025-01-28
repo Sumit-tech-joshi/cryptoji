@@ -1,32 +1,84 @@
-.App {
+
+
+/* Home Page Container */
+.home-container {
+  padding: 1rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Home Page Title */
+.home-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Crypto Table */
+.crypto-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #161b22;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.crypto-table th, .crypto-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #2c3138;
+}
+
+.crypto-table th {
+  background-color: #228be6;
+}
+
+.crypto-row:nth-child(even) {
+  background-color: #1c1f26;
+}
+
+/* Coin Name and Image */
+.crypto-name {
+  display: flex;
+  align-items: center;
+}
+
+.crypto-image {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+/* Coin Link */
+.crypto-link {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.crypto-link:hover {
+  text-decoration: underline;
+}
+
+/* Price Colors */
+.price-positive {
+  color: green;
+}
+
+.price-negative {
+  color: red;
+}
+
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .crypto-table th, .crypto-table td {
+    padding: 8px;
+    font-size: 14px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
 
 @keyframes App-logo-spin {
   from {
