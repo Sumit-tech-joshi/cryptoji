@@ -14,13 +14,35 @@ interface Coin {
     price_change_percentage_24h: number;
   }
 
+// News interface to define structure
+
+interface NewsArticle {
+    article_id: string;
+    title: string;
+    link: string;
+    creator?: string[];
+    description: string;
+    pubDate: string;
+    image_url?: string | null;
+    source_name: string;
+    source_url: string;
+    source_icon?: string | null;
+}
+
 const Home: React.FC = () => {
     const [coins, setCoins] = useState<Coin[]>([]);
+  const [news, setNews] = useState<NewsArticle[]>([]);
+
 
     useEffect(() => {
       // Fetch coins
       axios.get('http://localhost:3001/api/coins')
         .then((res) => setCoins(res.data))
+        .catch((err) => console.error(err));
+
+
+        axios.get('http://localhost:3001/api/news')
+        .then((res) => setNews(res.data.results))
         .catch((err) => console.error(err));
   
     }, []);
