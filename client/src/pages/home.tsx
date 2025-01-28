@@ -28,7 +28,41 @@ const Home: React.FC = () => {
   return (
     <div className="home-container">
       <h1 className="home-title">Top Cryptocurrencies</h1>
-
+      <table className="crypto-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Coin</th>
+            <th>Symbol</th>
+            <th>Price (USD)</th>
+            <th>24h Change %</th>
+            <th>Market Cap</th>
+          </tr>
+        </thead>
+        <tbody>
+          {coins.map((coin, index) => (
+            <tr key={coin.id} className="crypto-row">
+              <td>{index + 1}</td>
+              <td className="crypto-name">
+                <img 
+                  src={coin.image} 
+                  alt={coin.name} 
+                  className="crypto-image"
+                />
+                <Link to={`/coin/${coin.id}`} className="crypto-link">
+                  {coin.name}
+                </Link>
+              </td>
+              <td>{coin.symbol.toUpperCase()}</td>
+              <td>${coin.current_price.toLocaleString()}</td>
+              <td className={coin.price_change_percentage_24h >= 0 ? 'price-positive' : 'price-negative'}>
+                {coin.price_change_percentage_24h.toFixed(2)}%
+              </td>
+              <td>${coin.market_cap.toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
