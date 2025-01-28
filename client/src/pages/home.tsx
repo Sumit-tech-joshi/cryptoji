@@ -85,6 +85,44 @@ const Home: React.FC = () => {
           ))}
         </tbody>
       </table>
+         {/* News Section */}
+    <div className="news-section">
+        <h2>Latest Crypto News</h2>
+        <div className="news-container">
+          {news.length > 0 ? (
+            news.map((article) => (
+              <div key={article.article_id} className="news-item">
+                {/* Use the provided image_url or fallback to source icon */}
+                <img 
+                  src={article.image_url || article.source_icon || "https://via.placeholder.com/100"} 
+                  alt={article.source_name}
+                  className="news-image"
+                />
+                <div className="news-content">
+                  <h3>
+                    <a href={article.link} target="_blank" rel="noopener noreferrer">
+                      {article.title}
+                    </a>
+                  </h3>
+                  <p>{article.description}</p>
+                  <p>
+                    <strong>Source:</strong> 
+                    <a href={article.source_url} target="_blank" rel="noopener noreferrer">
+                      {article.source_name}
+                    </a>
+                  </p>
+                  <p><strong>Published:</strong> {new Date(article.pubDate).toLocaleString()}</p>
+                  {article.creator && article.creator.length > 0 && (
+                    <p><strong>Author:</strong> {article.creator.join(', ')}</p>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No news available.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
