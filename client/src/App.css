@@ -24,6 +24,10 @@
   overflow: hidden;
 }
 
+.crypto-logo {
+  width: 200px;
+}
+
 .crypto-table th, .crypto-table td {
   padding: 12px;
   text-align: left;
