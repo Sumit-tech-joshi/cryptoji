@@ -4,6 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import coinRoutes from './routes/coins';
 import newsRoutes from './routes/news';
+import youtubeRoutes from './routes/youtube';
+
 
 
 dotenv.config();
@@ -24,6 +26,7 @@ app.use(express.json());
 // Routes
 app.use('/api/coins', coinRoutes);
 app.use('/api/news', newsRoutes);
+app.use('/api/youtube', youtubeRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running...');
