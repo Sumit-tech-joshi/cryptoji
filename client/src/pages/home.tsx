@@ -29,9 +29,31 @@ interface NewsArticle {
     source_icon?: string | null;
 }
 
+// Define YouTube Video Interface
+interface YouTubeVideo {
+  id: { videoId: string };
+  snippet: {
+    title: string;
+    description: string;
+    thumbnails: { medium: { url: string } };
+    channelTitle: string;
+    publishedAt: string;
+  };
+}
+
+
 const Home: React.FC = () => {
     const [coins, setCoins] = useState<Coin[]>([]);
   const [news, setNews] = useState<NewsArticle[]>([]);
+
+  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+
+  useEffect(() => {
+    // Fetch YouTube Videos
+    axios.get('http://localhost:3001/api/youtube?q=cryptocurrency')
+      .then((res) => setVideos(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 
 
     useEffect(() => {
@@ -123,6 +145,29 @@ const Home: React.FC = () => {
           )}
         </div>
       </div>
+
+      <div className="home-container">
+      <h1 className="home-title">Crypto Video Updates</h1>
+
+      <div className="video-container">
+        {videos.map((video) => (
+          <div key={video.id.videoId} className="video-item">
+            <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank" rel="noopener noreferrer">
+              <img src={video.snippet.thumbnails.medium.url} alt={video.snippet.title} className="video-thumbnail" />
+            </a>
+            <div className="video-info">
+              <h3>
+                <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank" rel="noopener noreferrer">
+                  {video.snippet.title}
+                </a>
+              </h3>
+              <p>By {video.snippet.channelTitle}</p>
+              <p>Published: {new Date(video.snippet.publishedAt).toLocaleDateString()}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
     </div>
   );
 };
