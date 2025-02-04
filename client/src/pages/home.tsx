@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../App.css"; // Import the global stylesheet
 import Carousel from "react-multi-carousel";
+import Hero from "../components/hero.tsx";
 
 // Coin interface to define structure
 interface Coin {
@@ -50,7 +51,7 @@ const responsive = {
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
+    items: 4,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -90,9 +91,10 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="home-container">
-      <h1 className="home-title">Top Cryptocurrencies</h1>
-      <table className="crypto-table">
+    <div className="home-container ">
+      <Hero></Hero>
+      <h1 className="home-title margin-top-8 ">Top Cryptocurrencies</h1>
+      <table className="crypto-table desktop-width">
         <thead>
           <tr>
             <th>#</th>
@@ -100,7 +102,7 @@ const Home: React.FC = () => {
             <th>Symbol</th>
             <th>Price (USD)</th>
             <th>24h Change %</th>
-            <th>Market Cap</th>
+            <th className="hide-table-coulmn">Market Cap</th>
           </tr>
         </thead>
         <tbody>
@@ -128,21 +130,20 @@ const Home: React.FC = () => {
               >
                 {coin.price_change_percentage_24h.toFixed(2)}%
               </td>
-              <td>${coin.market_cap.toLocaleString()}</td>
+              <td className="hide-table-coulmn">${coin.market_cap.toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
       </table>
       {/* News Section */}
-      <div className="news-section">
-        <h2>Latest Crypto News</h2>
-        <div className="news-container"></div>
+      <div className="home-container margin-top-8 desktop-width">
+        <h2 className="home-title">Crypto News Updates</h2>
         <Carousel
           swipeable={false}
           draggable={false}
           showDots={true}
           responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
+          ssr={true}
           infinite={true}
           autoPlay={false}
           autoPlaySpeed={1000}
@@ -152,63 +153,50 @@ const Home: React.FC = () => {
           containerClass="carousel-container"
           removeArrowOnDeviceType={["tablet", "mobile"]}
           dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px news-section"
+          itemClass="carousel-item-padding-40-px video-container"
         >
-          {news.length > 0 ? (
-            news.map((article) => (
-              <div key={article.article_id} className="news-item">
-                {/* Use the provided image_url or fallback to source icon */}
-                <img
-                  src={
-                    article.image_url ||
-                    article.source_icon ||
-                    "https://via.placeholder.com/100"
-                  }
-                  alt={article.source_name}
-                  className="news-image"
-                />
-                <div className="news-content">
-                  <h3>
-                    <a
-                      href={article.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {article.title}
-                    </a>
-                  </h3>
-                  <p>{article.description}</p>
-                  <p>
-                    <strong>Source:</strong>
-                    <a
-                      href={article.source_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {article.source_name}
-                    </a>
-                  </p>
-                  <p>
-                    <strong>Published:</strong>{" "}
-                    {new Date(article.pubDate).toLocaleString()}
-                  </p>
-                  {article.creator && article.creator.length > 0 && (
-                    <p>
-                      <strong>Author:</strong> {article.creator.join(", ")}
-                    </p>
-                  )}
-                </div>
+          {news.map((article) => (
+            <div key={article.article_id} className="news-item">
+              <img
+                src={
+                  article.image_url ||
+                  article.source_icon ||
+                  "https://via.placeholder.com/100"
+                }
+                alt={article.source_name}
+              />
+              <div className="news-content">
+                <h3>
+                  <a
+                    href={article.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {article.title}
+                  </a>
+                </h3>
+                <p>{article.description}</p>
+                <p>
+                  <strong>Source:</strong>
+                  <a
+                    href={article.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {article.source_name}
+                  </a>
+                </p>
+                <p>
+                  <strong>Published:</strong>{" "}
+                  {new Date(article.pubDate).toLocaleString()}
+                </p>
               </div>
-            ))
-          ) : (
-            <p>No news available.</p>
-          )}
+            </div>
+          ))}
         </Carousel>
-        ;
       </div>
-
-      <div className="home-container">
-        <h1 className="home-title">Crypto Video Updates</h1>
+      <div className="home-container margin-top-8 desktop-width ">
+        <h2 className="home-title">Crypto Video Updates</h2>
         <Carousel
           swipeable={false}
           draggable={false}
