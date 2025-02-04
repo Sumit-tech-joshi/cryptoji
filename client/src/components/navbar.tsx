@@ -1,19 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/crypto_logo.png'; 
+import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
+import "../App.css";
+
 const NavBar: React.FC = () => {
   return (
-    <nav style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      padding: '1rem',
-      backgroundColor: '#f5f5f5'
-    }}>
-        <img src={logo} className="crypto-logo"/>
+    <nav className="cpt-nav desktop-width ">
+      <img src={logo} className="crypto-logo" />
 
-      <Link to="/">
-      </Link>
-   
+      <Link to="/"></Link>
     </nav>
   );
 };
