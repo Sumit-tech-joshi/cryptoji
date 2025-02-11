@@ -148,7 +148,7 @@ const Home: React.FC = () => {
         </tbody>
       </table>
       {/* News Section */}
-      <div className="home-container margin-top-8 desktop-width">
+      <div className="home-container margin-top-8 desktop-width" id="content-section">
         <h2 className="home-title">Crypto News Updates</h2>
         <Carousel
           swipeable={false}
