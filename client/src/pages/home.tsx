@@ -50,8 +50,16 @@ const responsive = {
     items: 5,
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 3000, min: 1700 },
     items: 4,
+  },
+  desktopTwo: {
+    breakpoint: { max: 1700, min: 1024 },
+    items: 3,
+  },
+  desktopThree: {
+    breakpoint: { max: 1200, min: 1024 },
+    items: 3,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -86,7 +94,9 @@ const Home: React.FC = () => {
 
     axios
       .get("http://localhost:3001/api/news")
-      .then((res) => setNews(res.data.results))
+      .then((res) => {
+        setNews(res.data.results);
+      })
       .catch((err) => console.error(err));
   }, []);
 
@@ -130,7 +140,9 @@ const Home: React.FC = () => {
               >
                 {coin.price_change_percentage_24h.toFixed(2)}%
               </td>
-              <td className="hide-table-coulmn">${coin.market_cap.toLocaleString()}</td>
+              <td className="hide-table-coulmn">
+                ${coin.market_cap.toLocaleString()}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -177,16 +189,6 @@ const Home: React.FC = () => {
                 </h3>
                 <p>{article.description}</p>
                 <p>
-                  <strong>Source:</strong>
-                  <a
-                    href={article.source_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {article.source_name}
-                  </a>
-                </p>
-                <p>
                   <strong>Published:</strong>{" "}
                   {new Date(article.pubDate).toLocaleString()}
                 </p>
@@ -226,6 +228,13 @@ const Home: React.FC = () => {
                   alt={video.snippet.title}
                   className="video-thumbnail"
                 />
+              
+              <div className="play-icon">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+                  alt="Play"
+                />
+              </div>
               </a>
               <div className="video-info">
                 <h3>
