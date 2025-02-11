@@ -92,6 +92,7 @@ const Home: React.FC = () => {
       .then((res) => setCoins(res.data))
       .catch((err) => console.error(err));
 
+    // Fetch news
     axios
       .get("http://localhost:3001/api/news")
       .then((res) => {
@@ -102,6 +103,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container ">
+      {/* Hero component */}
       <Hero></Hero>
       <h1 className="home-title margin-top-8 ">Top Cryptocurrencies</h1>
       <table className="crypto-table desktop-width">
