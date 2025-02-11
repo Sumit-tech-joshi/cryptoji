@@ -197,7 +197,7 @@ const Home: React.FC = () => {
           ))}
         </Carousel>
       </div>
-      <div className="home-container margin-top-8 desktop-width ">
+      <div className="home-container margin-top-8 desktop-width margin-bottom-8">
         <h2 className="home-title">Crypto Video Updates</h2>
         <Carousel
           swipeable={false}
