@@ -347,8 +347,7 @@ body {
 }
 
 .hero-image img {
-  max-width: 100%;
-  border-radius: 10px;
+  display: none;
 }
 
 .react-multiple-carousel__arrow--left {
@@ -373,6 +372,12 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding: 0 2rem;
+  }
+
+  .hero-image img {
+    display: block;
+    max-width: 100%;
+    border-radius: 10px;
   }
 
   .hide-table-coulmn {
