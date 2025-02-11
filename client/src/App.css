@@ -179,6 +179,7 @@ body {
 .news-item img {
   height: 180px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .news-content  h3 a {
@@ -243,12 +244,6 @@ body {
 }
 
 
-.video-thumbnail {
-  width: 100%;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 /* YouTube Play Icon Overlay */
 /* Video Card */
 .video-item {
@@ -273,7 +268,7 @@ body {
 /* Thumbnail Image */
 .video-thumbnail {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   display: block;
 }
@@ -336,7 +331,7 @@ body {
   background-color: #d64900;
   color: #d7d7d7;
   padding: 0.8rem 1.5rem;
-  border-radius: 5px;
+  border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
 }
@@ -345,7 +340,7 @@ body {
   background-color: #333;
   color: #fff;
   padding: 0.8rem 1.5rem;
-  border-radius: 5px;
+  border-radius: 8px;
   text-decoration: none;
 }
 
