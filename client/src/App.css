@@ -76,7 +76,7 @@ body {
 }
 
 .crypto-table th {
-  background-color: #228be6;
+  background-color: #d64900;
 }
 
 .crypto-row:nth-child(even) {
@@ -301,8 +301,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #ffcc00;
-  color: #0d0d0d;
+  background-color: #d64900;
+  color: #d7d7d7;
   padding: 0.8rem 1.5rem;
   border-radius: 5px;
   text-decoration: none;
