@@ -73,7 +73,6 @@ body {
 .crypto-table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #2c3138;
 }
 
 .crypto-table th {
@@ -135,7 +134,7 @@ body {
 }
 
 .news-item {
-  background-color: #828282;
+  background-color: #c4c4c4;
   padding: 1rem;
   border-radius: 8px;
   display: flex;
@@ -150,8 +149,13 @@ body {
   object-fit: cover;
 }
 
-.news-content h3 a {
-  color: #61dafb;
+.news-content  h3 a {
+  color: #d64900;
+  text-decoration: none;
+}
+
+.video-item  h3 a {
+  color: #d64900;
   text-decoration: none;
 }
 
@@ -160,8 +164,12 @@ body {
 }
 
 .news-content p {
-  font-size: 14px;
-  color: #ccc;
+  font-size: 16px;
+  color: #161616;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .news-content a {
@@ -183,13 +191,25 @@ body {
 }
 
 .video-item {
-  background-color: #161b22;
+  background-color: #c4c4c4;
   padding: 1rem;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
   max-width: 300px;
-  text-align: center;
 }
+
+.video-item  p {
+  font-size: 16px;
+  color: #161616;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 
 .video-thumbnail {
   width: 100%;
@@ -197,18 +217,52 @@ body {
   cursor: pointer;
 }
 
-.video-info h3 a {
-  color: #61dafb;
-  text-decoration: none;
+/* YouTube Play Icon Overlay */
+/* Video Card */
+.video-item {
+  background-color: #c4c4c4;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+  position: relative;
+}
+
+/* Video Thumbnail with Play Icon */
+.video-thumbnail-container {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Thumbnail Image */
+.video-thumbnail {
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+}
+
+/* YouTube Play Icon Overlay */
+.play-icon {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75px;
+  cursor: pointer;
+}
+
+.play-icon:hover img {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .video-info h3 a:hover {
   text-decoration: underline;
-}
-
-.video-info p {
-  font-size: 14px;
-  color: #ccc;
 }
 
 .hero-section {
