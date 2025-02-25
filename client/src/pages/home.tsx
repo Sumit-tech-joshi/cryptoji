@@ -87,11 +87,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Fetch coins
-    axios
-      .get("http://localhost:3001/api/coins")
-      .then((res) => setCoins(res.data))
-      .catch((err) => console.error(err));
-
     // Fetch news
     axios
       .get("http://localhost:3001/api/news")
@@ -100,6 +95,40 @@ const Home: React.FC = () => {
       })
       .catch((err) => console.error(err));
   }, []);
+
+
+  useEffect(() => {
+    // Fetch coins initially
+    axios
+      .get("http://localhost:3001/api/coins")
+      .then((res) => setCoins(res.data))
+      .catch((err) => console.error(err));
+
+    // Function to update coin prices randomly
+    const updatePrices = () => {
+      setCoins((prevCoins) =>
+        prevCoins.map((coin) => ({
+          ...coin,
+          current_price: adjustValue(coin.current_price, 2), // Change price slightly
+          price_change_percentage_24h: adjustValue(coin.price_change_percentage_24h, 1), // Change 24h % slightly
+          market_cap: adjustValue(coin.market_cap, 2), // Change market cap slightly
+        }))
+      );
+    };
+
+    // Run every 4 seconds
+    const interval = setInterval(updatePrices, 4000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
+   // Helper function to add slight random variation
+   const adjustValue = (value: number, percentage: number) => {
+    const variation = (value * percentage) / 100; // 2% variation
+    return value + (Math.random() * variation * 2 - variation); // Randomly increase/decrease
+  };
+
 
   return (
     <div className="home-container ">
