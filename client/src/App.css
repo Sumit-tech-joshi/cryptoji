@@ -16,6 +16,14 @@ body {
   margin-bottom: 1rem;
 }
 
+.margin-auto {
+  margin: auto;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
 .margin-top-1 {
   margin-top: 1rem;
 }
