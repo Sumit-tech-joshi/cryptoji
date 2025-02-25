@@ -7,7 +7,7 @@ import SignUp from "./pages/signup.tsx";
 
 function App() {
   return (
-    <Router> {/* ✅ Wrap everything inside Router */}
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
