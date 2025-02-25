@@ -261,18 +261,6 @@ body {
 
 
 /* YouTube Play Icon Overlay */
-/* Video Card */
-.video-item {
-  background-color: #c4c4c4;
-  padding: 1rem;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  max-width: 300px;
-  position: relative;
-}
 
 /* Video Thumbnail with Play Icon */
 .video-thumbnail-container {
