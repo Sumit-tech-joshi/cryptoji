@@ -421,6 +421,12 @@ body {
   .hide-table-coulmn {
     display: block;
   }
+
+  .cl-avatarBox {
+    width: 60px;
+    height: 60px;
+   }
+   
 }
 
 @keyframes App-logo-spin {
