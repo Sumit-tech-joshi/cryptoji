@@ -78,31 +78,25 @@ const Home: React.FC = () => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
   useEffect(() => {
-    // Fetch YouTube Videos
-    axios
-      .get("http://localhost:3001/api/youtube?q=cryptocurrency")
-      .then((res) => setVideos(res.data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    // Fetch coins
-    // Fetch news
-    axios
-      .get("http://localhost:3001/api/news")
-      .then((res) => {
-        setNews(res.data.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-
-  useEffect(() => {
     // Fetch coins initially
     axios
       .get("http://localhost:3001/api/coins")
       .then((res) => setCoins(res.data))
       .catch((err) => console.error(err));
+
+    // Fetch news
+    axios
+    .get("http://localhost:3001/api/news")
+    .then((res) => {
+      setNews(res.data.results);
+    })
+    .catch((err) => console.error(err));
+
+    // Fetch YouTube Videos
+    axios
+    .get("http://localhost:3001/api/youtube?q=cryptocurrency")
+    .then((res) => setVideos(res.data))
+    .catch((err) => console.error(err));
 
     // Function to update coin prices randomly
     const updatePrices = () => {
@@ -125,8 +119,11 @@ const Home: React.FC = () => {
 
    // Helper function to add slight random variation
    const adjustValue = (value: number, percentage: number) => {
-    const variation = (value * percentage) / 100; // 2% variation
-    return value + (Math.random() * variation * 2 - variation); // Randomly increase/decrease
+     // 2% variation
+    const variation = (value * percentage) / 100;
+
+    // Randomly increase/decrease
+    return value + (Math.random() * variation * 2 - variation); 
   };
 
 
