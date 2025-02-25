@@ -80,6 +80,14 @@ body {
   margin-bottom: 8rem;
 }
 
+.navbar {
+  text-align: end;
+  position: fixed;
+  right: 28px;
+  top: 28px;
+  z-index: 2;
+}
+
 /* Crypto Table */
 .crypto-table {
   width: 100%;
