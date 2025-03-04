@@ -63,14 +63,14 @@ const SignUpPage: React.FC = () => {
   };
 
   return (
-    <div className="auth-container text-align-center">
+    <div className="auth-container text-align-center margin-top-5">
       <img src={logo} className="crypto-logo" />
-      <h1>Create Your CryptoJi Account</h1>
+      <h1 className="margin-bottom-6">Create Your CryptoJi Account</h1>
 
-      <div className="favorite-coins-section">
+      <div className="favorite-coins-section margin-top-5">
         {/* Search & Select Favorite Coins */}
-        <div className="coin-search-container margin-top-8 ">
-          <h3>Select Your Favorite Cryptocurrencies</h3>
+        <div className="coin-search-container">
+          <h5>Select Your Favorite Cryptocurrencies</h5>
           <input
             type="text"
             placeholder="Search for a coin..."
@@ -94,7 +94,7 @@ const SignUpPage: React.FC = () => {
         <div className="favorite-coins-container">
           {favoriteCoins.length > 0 && (
             <>
-              <h3>Selected Favorite Coins:</h3>
+              <h5>Selected Favorite Coins:</h5>
               <ul className="favorite-coins-list">
                 {favoriteCoins.map((coinSymbol) => (
                   <li key={coinSymbol}>
