@@ -77,6 +77,8 @@ const responsive = {
 const Home: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [news, setNews] = useState<NewsArticle[]>([]);
+  const { user, isLoaded } = useUser(); // Get Clerk User
+  const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
 
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
@@ -142,6 +144,36 @@ const Home: React.FC = () => {
     return value + (Math.random() * variation * 2 - variation);
   };
 
+  // Toogle function to add favourite coin
+  const toggleFavorite = async (coinSymbol: string) => {
+    if (!user) {
+      alert("Please log in to save favorites!");
+      return;
+    }
+
+    let updatedFavorites: string[] = Array.isArray(user?.unsafeMetadata?.favoriteCoins)
+    ? [...(user.unsafeMetadata.favoriteCoins as string[])]
+    : [];  
+
+    if (updatedFavorites.includes(coinSymbol)) {
+      updatedFavorites = updatedFavorites.filter((coin) => coin !== coinSymbol);
+    } else {
+      updatedFavorites.push(coinSymbol);
+    }
+  
+    try {
+      console.log({ setFavoriteCoins: updatedFavorites})
+      await user.update({
+        unsafeMetadata: { favoriteCoins: updatedFavorites },
+      });
+      setFavoriteCoins(updatedFavorites);
+  
+      console.log("Favorites updated successfully!");
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+    }
+  };
+  
 
   return (
     <div className="home-container ">
@@ -157,6 +189,7 @@ const Home: React.FC = () => {
             <th>Price (USD)</th>
             <th>24h Change %</th>
             <th className="hide-table-coulmn">Market Cap</th>
+            <th>Add to Favourite</th>
           </tr>
         </thead>
         <tbody>
@@ -204,7 +237,10 @@ const Home: React.FC = () => {
         </tbody>
       </table>
       {/* News Section */}
-      <div className="home-container margin-top-8 desktop-width" id="content-section">
+      <div
+        className="home-container margin-top-8 desktop-width"
+        id="content-section"
+      >
         <h2 className="home-title">Crypto News Updates</h2>
         <Carousel
           swipeable={false}
@@ -284,13 +320,13 @@ const Home: React.FC = () => {
                   alt={video.snippet.title}
                   className="video-thumbnail"
                 />
-              
-              <div className="play-icon">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
-                  alt="Play"
-                />
-              </div>
+
+                <div className="play-icon">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+                    alt="Play"
+                  />
+                </div>
               </a>
               <div className="video-info">
                 <h3>
