@@ -171,6 +171,18 @@ const Home: React.FC = () => {
               <td className="hide-table-coulmn">
                 ${coin.market_cap.toLocaleString()}
               </td>
+              <td>
+                <button
+                  className="fav-btn"
+                  onClick={() => toggleFavorite(coin.symbol)}
+                >
+                  {favoriteCoins.includes(coin.symbol) ? (
+                    <img src={starFillIcon}></img>
+                  ) : (
+                    <img src={starIcon}></img>
+                  )}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
