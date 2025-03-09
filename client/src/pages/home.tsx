@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import "../App.css"; // Import the global stylesheet
 import Carousel from "react-multi-carousel";
 import Hero from "../components/hero.tsx";
+import { useUser } from "@clerk/clerk-react"; // Clerk User Hook
+import starIcon from "../assets/star.svg";
+import starFillIcon from "../assets/star_fill.svg";
 
 // Coin interface to define structure
 interface Coin {
@@ -86,17 +89,17 @@ const Home: React.FC = () => {
 
     // Fetch news
     axios
-    .get("http://localhost:3001/api/news")
-    .then((res) => {
-      setNews(res.data.results);
-    })
-    .catch((err) => console.error(err));
+      .get("http://localhost:3001/api/news")
+      .then((res) => {
+        setNews(res.data.results);
+      })
+      .catch((err) => console.error(err));
 
     // Fetch YouTube Videos
     axios
-    .get("http://localhost:3001/api/youtube?q=cryptocurrency")
-    .then((res) => setVideos(res.data))
-    .catch((err) => console.error(err));
+      .get("http://localhost:3001/api/youtube?q=cryptocurrency")
+      .then((res) => setVideos(res.data))
+      .catch((err) => console.error(err));
 
     // Function to update coin prices randomly
     const updatePrices = () => {
@@ -104,7 +107,10 @@ const Home: React.FC = () => {
         prevCoins.map((coin) => ({
           ...coin,
           current_price: adjustValue(coin.current_price, 2), // Change price slightly
-          price_change_percentage_24h: adjustValue(coin.price_change_percentage_24h, 1), // Change 24h % slightly
+          price_change_percentage_24h: adjustValue(
+            coin.price_change_percentage_24h,
+            1
+          ), // Change 24h % slightly
           market_cap: adjustValue(coin.market_cap, 2), // Change market cap slightly
         }))
       );
@@ -117,13 +123,23 @@ const Home: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-   // Helper function to add slight random variation
-   const adjustValue = (value: number, percentage: number) => {
-     // 2% variation
+  useEffect(() => {
+    if (isLoaded && user) {
+      // Ensure user is loaded before accessing metadata
+    let updatedFavorites: string[] = Array.isArray(user?.unsafeMetadata?.favoriteCoins)
+    ? [...(user?.unsafeMetadata.favoriteCoins as string[])]
+    : [];  
+
+    setFavoriteCoins(updatedFavorites);
+    }
+  }, [isLoaded, user]);
+  // Helper function to add slight random variation
+  const adjustValue = (value: number, percentage: number) => {
+    // 2% variation
     const variation = (value * percentage) / 100;
 
     // Randomly increase/decrease
-    return value + (Math.random() * variation * 2 - variation); 
+    return value + (Math.random() * variation * 2 - variation);
   };
 
 
