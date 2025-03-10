@@ -88,6 +88,29 @@ body {
   margin-bottom: var(--spacing-7);
 }
 
+.margin-left-1 {
+  margin-left: var(--spacing-1);
+}
+.margin-left-2 {
+  margin-left: var(--spacing-2);
+}
+.margin-left-3 {
+  margin-left: var(--spacing-3);
+}
+.margin-left-4 {
+  margin-left: var(--spacing-4);
+}
+.margin-left-5 {
+  margin-left: var(--spacing-5);
+}
+.margin-left-6 {
+  margin-left: var(--spacing-6);
+}
+.margin-left-7 {
+  margin-left: var(--spacing-7);
+}
+
+
 /* ========== Navbar ========== */
 .navbar {
   padding: 1rem 0;
@@ -515,6 +538,7 @@ body {
   font-weight: bold;
   font-size: 1.6rem;
   cursor: pointer;
+  border: none;
 }
 
 .btn-secondary {
@@ -579,6 +603,10 @@ body {
 }
 .cl-footer {
   display: none;
+}
+
+.user-title {
+  margin-top: 10%;
 }
 
 /* Responsive Table */
