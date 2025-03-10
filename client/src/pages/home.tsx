@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../App.css"; // Import the global stylesheet
 import Carousel from "react-multi-carousel";
 import Hero from "../components/hero.tsx";
@@ -79,10 +79,12 @@ const Home: React.FC = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const { user, isLoaded } = useUser(); // Get Clerk User
   const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
+  const location = useLocation();
 
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
   useEffect(() => {
+
     // Fetch coins initially
     axios
       .get("http://localhost:3001/api/coins")
@@ -126,13 +128,34 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    
     if (isLoaded && user) {
-      // Ensure user is loaded before accessing metadata
-    let updatedFavorites: string[] = Array.isArray(user?.unsafeMetadata?.favoriteCoins)
-    ? [...(user?.unsafeMetadata.favoriteCoins as string[])]
-    : [];  
+      debugger
+      let updatedFavorites: string[] = [];
+      let favoriteCoins = []
 
-    setFavoriteCoins(updatedFavorites);
+      if (localStorage.getItem("currentPage") === "SignUp") {
+        const storedCoins = localStorage.getItem("favoriteCoins");
+  
+        favoriteCoins = storedCoins ? JSON.parse(storedCoins) : [];
+  
+        // Update user metadata in Clerk
+        updatedUserDataforFavourite(favoriteCoins);
+      }
+  
+      // Ensure user is loaded before accessing metadata
+      updatedFavorites = Array.isArray(favoriteCoins
+      ) && favoriteCoins.length ? favoriteCoins as string[] : Array.isArray(
+        user?.unsafeMetadata?.favoriteCoins
+      )
+        ? [...(user?.unsafeMetadata.favoriteCoins as string[])]
+        : [];
+
+      setFavoriteCoins(updatedFavorites);
+      // Clear localStorage for currentPage
+      localStorage.removeItem("currentPage");
+      // Clear localStorage after storing in Clerk
+      localStorage.removeItem("favoriteCoins");
     }
   }, [isLoaded, user]);
   // Helper function to add slight random variation
@@ -144,6 +167,12 @@ const Home: React.FC = () => {
     return value + (Math.random() * variation * 2 - variation);
   };
 
+  const updatedUserDataforFavourite = async (updatedFavorites) => {
+    await user?.update({
+      unsafeMetadata: { favoriteCoins: updatedFavorites },
+    });
+  };
+
   // Toogle function to add favourite coin
   const toggleFavorite = async (coinSymbol: string) => {
     if (!user) {
@@ -151,29 +180,28 @@ const Home: React.FC = () => {
       return;
     }
 
-    let updatedFavorites: string[] = Array.isArray(user?.unsafeMetadata?.favoriteCoins)
-    ? [...(user.unsafeMetadata.favoriteCoins as string[])]
-    : [];  
+    let updatedFavorites: string[] = Array.isArray(
+      user?.unsafeMetadata?.favoriteCoins
+    )
+      ? [...(user.unsafeMetadata.favoriteCoins as string[])]
+      : [];
 
     if (updatedFavorites.includes(coinSymbol)) {
       updatedFavorites = updatedFavorites.filter((coin) => coin !== coinSymbol);
     } else {
       updatedFavorites.push(coinSymbol);
     }
-  
+
     try {
-      console.log({ setFavoriteCoins: updatedFavorites})
-      await user.update({
-        unsafeMetadata: { favoriteCoins: updatedFavorites },
-      });
+      console.log({ setFavoriteCoins: updatedFavorites });
+      await updatedUserDataforFavourite(updatedFavorites);
       setFavoriteCoins(updatedFavorites);
-  
+
       console.log("Favorites updated successfully!");
     } catch (error) {
       console.error("Error updating favorites:", error);
     }
   };
-  
 
   return (
     <div className="home-container ">
