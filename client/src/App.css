@@ -90,12 +90,73 @@ body {
 
 /* ========== Navbar ========== */
 .navbar {
-  text-align: end;
+  padding: 1rem 2rem;
   position: fixed;
-  right: var(--spacing-2);
-  top: var(--spacing-2);
-  z-index: 2;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  transition: background 0.3s ease-in-out;
+  text-align: center;
+  width: 100%;
 }
+
+.navbar-container {
+  margin-left: 12%;
+  display: flex;
+  justify-content: space-between;
+  max-width: 77%; /* Adjust width */
+  align-items: center;
+  width: 100%;
+}
+
+/* Default Navbar - Transparent */
+.navbar {
+  background: transparent;
+}
+
+/* Scrolled Navbar */
+.navbar.scrolled {
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styles */
+.crypto-logo {
+  width: 150px; /* Adjust as needed */
+  height: auto;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Login and Signup Buttons */
+.nav-btn {
+  padding: 0.7rem 2.4rem;
+  font-size: 1.4rem;
+  border-radius: var(--border-radius-medium);
+  text-decoration: none;
+  transition: all 0.6s ease-in-out;
+}
+
+.login-btn {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  margin: 0 10%;
+}
+
+.login-btn:hover {
+  background: var(--primary-color);
+  color: var(--background-color);;
+}
+
+.signup-btn {
+  background: var(--primary-color);
+  color: var(--background-color);;
+  border: none;
+}
+
+.signup-btn:hover {
+  background: #ff8c00;
+}
+
 
 /* Sign up */
 .coin-search-container {
