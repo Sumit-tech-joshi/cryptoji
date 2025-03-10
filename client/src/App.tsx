@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import Home from "./pages/home.tsx";
+import Research from "./pages/research.tsx";
+
 import Login from "./pages/login.tsx";
 import SignUp from "./pages/signup.tsx";
 
@@ -12,6 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/research" element={<Research />} />
+
 
         {/* Protect dashboard route */}
         <Route
@@ -19,6 +23,7 @@ function App() {
           element={
             <SignedIn>
               <Home />
+              <Research />
             </SignedIn>
           }
         />
@@ -28,7 +33,7 @@ function App() {
           element={
             <SignedOut>
               <Login />
-              <SignUp/>
+              <SignUp />
             </SignedOut>
           }
         />
