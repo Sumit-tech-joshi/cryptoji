@@ -20,6 +20,7 @@ const SignUpPage: React.FC = () => {
 
   // Fetch coins from API when component loads
   useEffect(() => {
+    localStorage.setItem("currentPage", "SignUp");
     axios
       .get("http://localhost:3001/api/coins")
       .then((res) => setCoins(res.data))
@@ -45,22 +46,18 @@ const SignUpPage: React.FC = () => {
     if (!favoriteCoins.includes(coinSymbol)) {
       setFavoriteCoins([...favoriteCoins, coinSymbol]);
     }
-    setSearchTerm(""); // Clear search after selection
-    setFilteredCoins([]); // Hide suggestions
+    setSearchTerm("");
+    setFilteredCoins([]);
+
+    localStorage.setItem("favoriteCoins", JSON.stringify([...favoriteCoins, coinSymbol]));
   };
 
   // Remove a coin from favorites
   const removeFavoriteCoin = (coinSymbol: string) => {
     setFavoriteCoins(favoriteCoins.filter((coin) => coin !== coinSymbol));
+    localStorage.setItem("favoriteCoins", JSON.stringify(favoriteCoins.filter((coin) => coin !== coinSymbol)));
   };
 
-  // Store favorite coins on signup
-  const handleSignup = async () => {
-    if (user && favoriteCoins.length > 0) {
-      await user.update({ publicMetadata: { favoriteCoins } });
-      console.log("Favorite coins stored!");
-    }
-  };
 
   return (
     <div className="auth-container text-align-center margin-top-5">
@@ -111,7 +108,7 @@ const SignUpPage: React.FC = () => {
       </div>
 
       {/* Clerk Signup Form */}
-      <SignUp afterSignUp={handleSignup} />
+      <SignUp />
 
       <div className="login-footer">
         Already have an account? <Link to="/login">Sign in</Link>
