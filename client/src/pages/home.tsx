@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import "../App.css"; // Import the global stylesheet
-import Carousel from "react-multi-carousel";
 import Hero from "../components/hero.tsx";
 import { useUser } from "@clerk/clerk-react"; // Clerk User Hook
 import starIcon from "../assets/star.svg";
 import starFillIcon from "../assets/star_fill.svg";
 import CarouselSection from "../components/carouselSection.tsx";
+import { getCoins, getNews, getVideos } from "../services/apiService";
 
 // Coin interface to define structure
 interface Coin {
@@ -47,34 +47,6 @@ interface YouTubeVideo {
   };
 }
 
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1700 },
-    items: 4,
-  },
-  desktopTwo: {
-    breakpoint: { max: 1700, min: 1024 },
-    items: 3,
-  },
-  desktopThree: {
-    breakpoint: { max: 1200, min: 1024 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
-
 const Home: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [news, setNews] = useState<NewsArticle[]>([]);
@@ -85,28 +57,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
 
-    // Fetch coins initially
-    axios
-      .get("http://localhost:3001/api/coins")
-      .then((res) => setCoins(res.data))
-      .catch((err) => console.error(err));
-
-    // Fetch news
-    axios
-      .get("http://localhost:3001/api/news")
-      .then((res) => {
-        setNews(res.data.results);
-      })
-      .catch((err) => console.error(err));
-
-    // Fetch YouTube Videos
-    axios
-      .get("http://localhost:3001/api/youtube?q=cryptocurrency")
-      .then((res) => setVideos(res.data))
-      .catch((err) => console.error(err));
-
+    // Fetch cached API data
+    getCoins().then((data) => setCoins(data || []));
+    getNews().then((data) => setNews(data.results || []));
+    getVideos().then((data) => setVideos(data || []));
     
-
     // Function to update coin prices randomly
     const updatePrices = () => {
       setCoins((prevCoins) =>
@@ -159,6 +114,7 @@ const Home: React.FC = () => {
       localStorage.removeItem("favoriteCoins");
     }
   }, [isLoaded, user]);
+  
   // Helper function to add slight random variation
   const adjustValue = (value: number, percentage: number) => {
     // 2% variation
@@ -277,7 +233,6 @@ const Home: React.FC = () => {
           publishedAt: article.pubDate,
         }))}
         type="news"
-        responsive={responsive}
       />
 
       {/* Videos Section */}
@@ -292,7 +247,6 @@ const Home: React.FC = () => {
           publishedAt: video.snippet.publishedAt,
         }))}
         type="video"
-        responsive={responsive}
       />
     </div>
   );
