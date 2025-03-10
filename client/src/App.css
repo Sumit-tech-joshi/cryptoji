@@ -504,6 +504,16 @@ body {
   border-top: none;
 }
 
+.fav-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.fav-btn:hover {
+  color: #ffa500;
+}
+
 .login-footer span {
   color: rgb(145, 27, 255);
 }
