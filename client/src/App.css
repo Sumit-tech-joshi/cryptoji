@@ -394,6 +394,7 @@ body {
   height: 180px;
   object-fit: cover;
   border-radius: 8px;
+  width: 100%;
 }
 
 .news-content h3 a {
