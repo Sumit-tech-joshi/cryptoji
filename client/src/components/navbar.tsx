@@ -4,12 +4,12 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import logoDefault from "../assets/logo.png"; // Default logo
 import logoScrolled from "../assets/logo-black.png"; // Logo when scrolled
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC<{onlyDefaultLogo: boolean}> = ({ onlyDefaultLogo }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > window.innerHeight - 800) {
+      if (window.scrollY > window.innerHeight - 700) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -24,7 +24,7 @@ const NavBar: React.FC = () => {
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
         {/* Dynamic Logo */}
-        <img src={scrolled ? logoScrolled : logoDefault} className="crypto-logo" alt="Crypto Logo" />
+        <img src={onlyDefaultLogo ? logoScrolled : scrolled ? logoScrolled : logoDefault} className="crypto-logo" alt="Crypto Logo" />
 
         <div className="nav-links">
           {/* Show sign-in/sign-up buttons for non-authenticated users */}
