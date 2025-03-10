@@ -1,6 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 
+// Import default images
+import crypto1 from "../assets/crypto_01.jpg";
+import crypto2 from "../assets/crypto_02.jpg";
+import crypto3 from "../assets/crypto_03.jpg";
+import crypto4 from "../assets/crypto_04.jpg";
+import crypto5 from "../assets/crypto_05.jpg";
+
 interface CarouselItem {
   id: string;
   title: string;
@@ -15,10 +22,43 @@ interface CarouselProps {
   title: string;
   items: CarouselItem[];
   type: "news" | "video";
-  responsive: any;
 }
 
-const CarouselSection: React.FC<CarouselProps> = ({ title, items, type, responsive }) => {
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1700 },
+    items: 4,
+  },
+  desktopTwo: {
+    breakpoint: { max: 1700, min: 1024 },
+    items: 3,
+  },
+  desktopThree: {
+    breakpoint: { max: 1200, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
+
+// Random Fallback Image Function
+const getRandomFallbackImage = () => {
+  const fallbackImages = [crypto1, crypto2, crypto3, crypto4, crypto5];
+  return fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+};
+
+const CarouselSection: React.FC<CarouselProps> = ({ title, items, type }) => {
   return (
     <div className="home-container margin-top-8 desktop-width margin-bottom-8">
       <h2 className="home-title">{title}</h2>
@@ -42,11 +82,12 @@ const CarouselSection: React.FC<CarouselProps> = ({ title, items, type, responsi
         {items.map((item) => (
           <div key={item.id} className={type === "news" ? "news-item" : "video-item"}>
             <a href={item.link} target="_blank" rel="noopener noreferrer">
-              <img
-                src={item.imageUrl || "https://via.placeholder.com/100"}
-                alt={item.title}
-                className={type === "news" ? "news-thumbnail" : "video-thumbnail"}
-              />
+               <img
+                  src={item.imageUrl || getRandomFallbackImage()}
+                  alt={item.title}
+                  className={type === "news" ? "news-thumbnail" : "video-thumbnail"}
+                  onError={(e) => (e.currentTarget.src = getRandomFallbackImage())} // Handle failed image loading
+                />
             </a>
             {type === "video" && <div className="play-icon">
                   <img
