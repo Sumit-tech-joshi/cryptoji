@@ -7,6 +7,7 @@ import Hero from "../components/hero.tsx";
 import { useUser } from "@clerk/clerk-react"; // Clerk User Hook
 import starIcon from "../assets/star.svg";
 import starFillIcon from "../assets/star_fill.svg";
+import CarouselSection from "../components/carouselSection.tsx";
 
 // Coin interface to define structure
 interface Coin {
@@ -22,7 +23,7 @@ interface Coin {
 // News interface to define structure
 
 interface NewsArticle {
-  article_id: string;
+  id: string;
   title: string;
   link: string;
   creator?: string[];
@@ -79,7 +80,6 @@ const Home: React.FC = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const { user, isLoaded } = useUser(); // Get Clerk User
   const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
-  const location = useLocation();
 
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
 
@@ -104,6 +104,8 @@ const Home: React.FC = () => {
       .get("http://localhost:3001/api/youtube?q=cryptocurrency")
       .then((res) => setVideos(res.data))
       .catch((err) => console.error(err));
+
+    
 
     // Function to update coin prices randomly
     const updatePrices = () => {
@@ -264,117 +266,34 @@ const Home: React.FC = () => {
         </tbody>
       </table>
       {/* News Section */}
-      <div
-        className="home-container margin-top-8 desktop-width"
-        id="content-section"
-      >
-        <h2 className="home-title">Crypto News Updates</h2>
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={true}
-          responsive={responsive}
-          ssr={true}
-          infinite={true}
-          autoPlay={false}
-          autoPlaySpeed={1000}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px video-container"
-        >
-          {news.map((article) => (
-            <div key={article.article_id} className="news-item">
-              <img
-                src={
-                  article.image_url ||
-                  article.source_icon ||
-                  "https://via.placeholder.com/100"
-                }
-                alt={article.source_name}
-              />
-              <div className="news-content">
-                <h3>
-                  <a
-                    href={article.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {article.title}
-                  </a>
-                </h3>
-                <p>{article.description}</p>
-                <p>
-                  <strong>Published:</strong>{" "}
-                  {new Date(article.pubDate).toLocaleString()}
-                </p>
-              </div>
-            </div>
-          ))}
-        </Carousel>
-      </div>
-      <div className="home-container margin-top-8 desktop-width margin-bottom-8">
-        <h2 className="home-title">Crypto Video Updates</h2>
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={true}
-          responsive={responsive}
-          ssr={true}
-          infinite={true}
-          autoPlay={false}
-          autoPlaySpeed={1000}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px video-container"
-        >
-          {videos.map((video) => (
-            <div key={video.id.videoId} className="video-item">
-              <a
-                href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src={video.snippet.thumbnails.medium.url}
-                  alt={video.snippet.title}
-                  className="video-thumbnail"
-                />
+      <CarouselSection
+        title="Crypto News Updates"
+        items={news.map((article) => ({
+          id: article.id,
+          title: article.title,
+          link: article.link,
+          imageUrl: article.image_url,
+          source: article.source_name,
+          publishedAt: article.pubDate,
+        }))}
+        type="news"
+        responsive={responsive}
+      />
 
-                <div className="play-icon">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
-                    alt="Play"
-                  />
-                </div>
-              </a>
-              <div className="video-info">
-                <h3>
-                  <a
-                    href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {video.snippet.title}
-                  </a>
-                </h3>
-                <p>By {video.snippet.channelTitle}</p>
-                <p>
-                  Published:{" "}
-                  {new Date(video.snippet.publishedAt).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          ))}
-        </Carousel>
-      </div>
+      {/* Videos Section */}
+      <CarouselSection
+        title="Crypto Video Updates"
+        items={videos.map((video) => ({
+          id: video.id.videoId,
+          title: video.snippet.title,
+          link: `https://www.youtube.com/watch?v=${video.id.videoId}`,
+          imageUrl: video.snippet.thumbnails.medium.url,
+          channelTitle: video.snippet.channelTitle,
+          publishedAt: video.snippet.publishedAt,
+        }))}
+        type="video"
+        responsive={responsive}
+      />
     </div>
   );
 };
