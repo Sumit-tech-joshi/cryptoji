@@ -130,7 +130,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     
     if (isLoaded && user) {
-      debugger
       let updatedFavorites: string[] = [];
       let favoriteCoins = []
 
@@ -145,7 +144,7 @@ const Home: React.FC = () => {
   
       // Ensure user is loaded before accessing metadata
       updatedFavorites = Array.isArray(favoriteCoins
-      ) && favoriteCoins.length ? favoriteCoins as string[] : Array.isArray(
+      ) && favoriteCoins.length ?  favoriteCoins as string[] : Array.isArray(
         user?.unsafeMetadata?.favoriteCoins
       )
         ? [...(user?.unsafeMetadata.favoriteCoins as string[])]
@@ -215,7 +214,7 @@ const Home: React.FC = () => {
             <th>Coin</th>
             <th>Symbol</th>
             <th>Price (USD)</th>
-            <th>24h Change %</th>
+            <th className="hide-table-coulmn">24h Change %</th>
             <th className="hide-table-coulmn">Market Cap</th>
             <th>Add to Favourite</th>
           </tr>
@@ -239,8 +238,8 @@ const Home: React.FC = () => {
               <td
                 className={
                   coin.price_change_percentage_24h >= 0
-                    ? "price-positive"
-                    : "price-negative"
+                    ? "price-positive hide-table-coulmn"
+                    : "price-negative hide-table-coulmn"
                 }
               >
                 {coin.price_change_percentage_24h.toFixed(2)}%

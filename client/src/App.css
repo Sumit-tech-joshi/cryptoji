@@ -90,7 +90,7 @@ body {
 
 /* ========== Navbar ========== */
 .navbar {
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   position: fixed;
   top: 0;
   right: 0;
@@ -101,12 +101,11 @@ body {
 }
 
 .navbar-container {
-  margin-left: 12%;
   display: flex;
   justify-content: space-between;
-  max-width: 77%; /* Adjust width */
   align-items: center;
-  width: 100%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 /* Default Navbar - Transparent */
@@ -606,7 +605,7 @@ body {
   }
 
   .hide-table-coulmn {
-    display: block;
+    display: table-cell;
   }
 
   .cl-avatarBox {
