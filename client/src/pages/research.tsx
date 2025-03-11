@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import CarouselSection from "../components/carouselSection";
-import { getCoins, getNews, getVideos } from "../services/apiService";
+import { getCoins, getNews, getVideos, getAIInsights } from "../services/apiService";
+import aiLoader from "../assets/loader_ai.gif";
 
 // Coin Interface
 interface Coin {
@@ -45,6 +45,10 @@ const Research: React.FC = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [activeCoin, setActiveCoin] = useState<string | null>(null);
+  const [aiInsights, setAiInsights] = useState<any>({});
+  const [selectedCoin, setSelectedCoin] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -71,12 +75,28 @@ const Research: React.FC = () => {
         let selectedCoinName = filteredCoins.filter(
           (coin: Coin) => coin.symbol == activeCoin
         )?.[0]?.name;
-
+        setSelectedCoin(selectedCoinName);
+        const insights = fetchInsights(selectedCoinName);
+        setAiInsights(insights);
         getNews(selectedCoinName).then((data) => setNews(data?.results || []));
         getVideos(selectedCoinName).then((data) => setVideos(data || []));
       });
     }
   }, [favoriteCoins, activeCoin]);
+
+  const fetchInsights = async (coin) => {
+
+    try {
+      setLoading(true);
+      const insights = await getAIInsights(coin);
+      setAiInsights(insights);
+      setLoading(false);
+
+    } catch (error) {
+      console.log({error})
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="user-container">
@@ -165,6 +185,79 @@ const Research: React.FC = () => {
           <p>No favorite coins yet. Add some from the home page!</p>
         )}
       </div>
+
+       {/* AI Insights Section */}
+       {selectedCoin && (
+        <div className="desktop-width margin-top-6 ai-container">
+          <h2 className="">AI Insights for {selectedCoin}</h2>
+
+          {loading ? (
+            <div className="ai-loader-wrapper">
+            <img src={aiLoader} width="200" className="text-align-center" alt="AI loader"/>
+            </div>
+          ) : (
+            <div className="ai-insights-container">
+              {aiInsights && aiInsights.investment_recommendation ? (
+                <>
+                  {/* Investment Summary */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">Investment Recommendation</h4>
+                    <p className="ai-text"><strong>📊 Risk Level:</strong> {aiInsights.investment_recommendation.risk_level}</p>
+                    <p className="ai-text"><strong>💡 Reason:</strong> {aiInsights.investment_recommendation.reason}</p>
+                  </div>
+      
+                  {/* Market Summary */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">📈 Market Overview</h4>
+                    <p className="ai-text"><strong>🔍 Sentiment:</strong> {aiInsights.market_summary?.overview}</p>
+                    <p className="ai-text"><strong>📊 6-12 Month Trend:</strong> {aiInsights.market_summary?.price_trend}</p>
+                    <p className="ai-text"><strong>🐋 Whale Activity:</strong> {aiInsights.market_summary?.whale_activity}</p>
+                  </div>
+      
+                  {/* Key Market Factors */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">🔎 Key Market Factors</h4>
+                    <ul className="ai-market-factors">
+                      {aiInsights.key_market_factors?.map((factor, index) => (
+                        <li key={index} className="ai-market-factor">
+                          <strong>{factor.title}:</strong> {factor.description}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+      
+                  {/* Recent News */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">📰 Latest Market News</h4>
+                    <p className="ai-text">{aiInsights.recent_news?.description}</p>
+                  </div>
+      
+                  {/* Future Predictions */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">🔮 Future Predictions</h4>
+                    <p className="ai-text">{aiInsights.future_predictions?.description}</p>
+                  </div>
+      
+                  {/* Risks */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">⚠️ Potential Risks</h4>
+                    <p className="ai-text">{aiInsights.potential_risks?.description}</p>
+                  </div>
+      
+                  {/* Investment Insights */}
+                  <div className="ai-box">
+                    <h4 className="ai-section-title">💰 Investment Insights</h4>
+                    <p className="ai-text">{aiInsights.investment_insights?.description}</p>
+                  </div>
+      
+                </>
+              )  : (
+            <p className="text-red-500">Error fetching insights.</p>
+          )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* === News Section === */}
       <CarouselSection
