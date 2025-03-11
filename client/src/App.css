@@ -110,6 +110,15 @@ body {
   margin-left: var(--spacing-7);
 }
 
+.margin-left-10-per {
+  margin-left: 10%;
+}
+
+.margin-right-10-per {
+  margin-right: 10%;
+}
+
+
 
 /* ========== Navbar ========== */
 .navbar {
@@ -609,6 +618,41 @@ body {
 .user-title {
   margin-top: 10%;
 }
+
+/* === Top Bar Styling === */
+.coin-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.coin-button {
+  padding: 8px 12px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.coin-button.active {
+  background: #ffa500;
+  color: white;
+  border: 1px solid #ffa500;
+}
+
+/* Dropdown for larger selections */
+.coin-dropdown {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
 
 /* Responsive Table */
 @media (max-width: 768px) {
