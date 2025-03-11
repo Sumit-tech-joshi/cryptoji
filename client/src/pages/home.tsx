@@ -222,8 +222,9 @@ const Home: React.FC = () => {
         </tbody>
       </table>
       {/* News Section */}
+      <div id="content-section">
       <CarouselSection
-        title="Crypto News Updates"
+        title="Crypto News Updates" 
         items={news.map((article) => ({
           id: article.id,
           title: article.title,
@@ -248,6 +249,7 @@ const Home: React.FC = () => {
         }))}
         type="video"
       />
+      </div>
     </div>
   );
 };
