@@ -4,7 +4,9 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import logoDefault from "../assets/logo.png"; // Default logo
 import logoScrolled from "../assets/logo-black.png"; // Logo when scrolled
 
-const NavBar: React.FC<{onlyDefaultLogo: boolean}> = ({ onlyDefaultLogo }) => {
+const NavBar: React.FC<{ onlyDefaultLogo: boolean }> = ({
+  onlyDefaultLogo,
+}) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,9 +24,27 @@ const NavBar: React.FC<{onlyDefaultLogo: boolean}> = ({ onlyDefaultLogo }) => {
 
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
+ 
       <div className="navbar-container">
+      {onlyDefaultLogo && (
+        <div className="back-button-container">
+          <Link to="/" className="back-button ">
+            ←
+          </Link>
+        </div>
+      )}
         {/* Dynamic Logo */}
-        <img src={onlyDefaultLogo ? logoScrolled : scrolled ? logoScrolled : logoDefault} className="crypto-logo" alt="Crypto Logo" />
+        <img
+          src={
+            onlyDefaultLogo
+              ? logoScrolled
+              : scrolled
+              ? logoScrolled
+              : logoDefault
+          }
+          className="crypto-logo"
+          alt="Crypto Logo"
+        />
 
         <div className="nav-links">
           {/* Show sign-in/sign-up buttons for non-authenticated users */}
@@ -42,7 +62,7 @@ const NavBar: React.FC<{onlyDefaultLogo: boolean}> = ({ onlyDefaultLogo }) => {
             <UserButton />
           </SignedIn>
         </div>
-        </div>
+      </div>
     </nav>
   );
 };
