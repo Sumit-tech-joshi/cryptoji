@@ -59,7 +59,7 @@ const Home: React.FC = () => {
 
     // Fetch cached API data
     getCoins().then((data) => setCoins(data || []));
-    getNews().then((data) => setNews(data.results || []));
+    getNews().then((data) => setNews(data?.results || []));
     getVideos().then((data) => setVideos(data || []));
     
     // Function to update coin prices randomly
