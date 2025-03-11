@@ -10,11 +10,11 @@ const YOUTUBE_API_KEY = process.env.YOUTUBE_BACKUP_API;
 
 router.get('/', async (req: any, res: any) => {
   const query = req.query.q || 'cryptocurrency';
-  const cacheKey = `youtube_${query}`; // Unique cache key per query
+  const cacheKey = req.query.q || query; // Unique cache key per query
 
   try {
     // Check Cache First
-    const cachedData = await Cache.findOne({ key: cacheKey });
+    const cachedData = await Cache.findOne({ key: `youtube-cache-${cacheKey}` });
 
     if (cachedData) {
       console.log('Serving YouTube videos from Cache');
@@ -27,7 +27,7 @@ router.get('/', async (req: any, res: any) => {
     });
 
     // Store in Cache
-    await Cache.create({ key: cacheKey, data: response.data.items });
+    await Cache.create({ key: `youtube-cache-${cacheKey}`, data: response.data.items });
 
     return res.json(response.data.items);
   } catch (error) {
