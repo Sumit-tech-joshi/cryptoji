@@ -438,6 +438,10 @@ body {
   text-decoration: underline;
 }
 
+.content-info a {
+  text-decoration: none;
+  color: var(--text-color);
+}
 /* Video Section */
 .video-container {
   display: flex;
@@ -651,6 +655,107 @@ body {
   border-radius: 5px;
   border: 1px solid #ddd;
   cursor: pointer;
+}
+
+/* ==================== AI Insights Styling ==================== */
+
+/* Container */
+.ai-container {
+  padding: var(--spacing-2);
+  background: white;
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.ai-container h2 {
+  font-size: 32px;
+}
+
+/* AI Insights Wrapper */
+.ai-insights-container {
+  background-color: white;
+  border-radius: var(--border-radius-medium);
+  margin-top: var(--spacing-2);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Section Titles */
+.ai-section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-light-color);
+  margin-bottom: var(--spacing-1);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 5px;
+}
+
+/* Text */
+.ai-text {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-1);
+}
+
+/* AI Box (General Insights) */
+.ai-box {
+  background: var(--news-bg-color);
+  padding: var(--spacing-2);
+  border-radius: var(--border-radius-medium);
+  margin-bottom: var(--spacing-2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.ai-box:hover {
+  transform: translateY(-5px);
+}
+
+/* Market Factors */
+.ai-market-factors {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ai-market-factor {
+  background: var(--news-bg-color);
+  padding: var(--spacing-1);
+  border-radius: var(--border-radius-small);
+  margin-bottom: var(--spacing-1);
+}
+
+/* Loader Centering */
+.ai-loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Ensures vertical centering */
+}
+
+.ai-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ai-insights-container {
+    padding: var(--spacing-1);
+  }
+
+  .ai-section-title {
+    font-size: 1.2rem;
+  }
+
+  .ai-text {
+    font-size: 0.9rem;
+  }
+
+  .ai-image-container {
+    width: 120px;
+  }
 }
 
 
