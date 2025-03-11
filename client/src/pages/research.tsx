@@ -44,38 +44,80 @@ const Research: React.FC = () => {
   const [coinData, setCoinData] = useState<Coin[]>([]);
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [activeCoin, setActiveCoin] = useState<string | null>(null);
 
   useEffect(() => {
     if (isLoaded && user) {
       // Get user's favorite coins
-      const storedFavorites = user?.unsafeMetadata?.favoriteCoins;
+      const storedFavorites = user?.unsafeMetadata?.favoriteCoins || [];
       setFavoriteCoins(storedFavorites || []);
+
+      // Automatically set the first favorite coin as active
+      if (storedFavorites.length > 0) {
+        setActiveCoin(storedFavorites[0]);
+      }
     }
   }, [isLoaded, user]);
 
   useEffect(() => {
     if (favoriteCoins.length > 0) {
       // Fetch favorite coin data
-
       getCoins().then((data) => {
-          const filteredCoins = data.filter((coin: Coin) => favoriteCoins.includes(coin.symbol));
-          setCoinData(filteredCoins);
-      });
-      getNews().then((data) => setNews(data.results || []));
-      getVideos().then((data) => setVideos(data || []));
+        const filteredCoins = data?.filter((coin: Coin) =>
+          favoriteCoins.includes(coin.symbol)
+        );
+        setCoinData(filteredCoins);
 
+        let selectedCoinName = filteredCoins.filter(
+          (coin: Coin) => coin.symbol == activeCoin
+        )?.[0]?.name;
+
+        getNews(selectedCoinName).then((data) => setNews(data?.results || []));
+        getVideos(selectedCoinName).then((data) => setVideos(data || []));
+      });
     }
-  }, [favoriteCoins]);
+  }, [favoriteCoins, activeCoin]);
 
   return (
     <div className="user-container">
       <Navbar onlyDefaultLogo={true} />
 
-      <h1 className="user-title margin-left-5">My Favorite Cryptos</h1>
+      <h1 className="user-title margin-left-10-per margin-bottom-4">
+        My Favorite Cryptos
+      </h1>
 
-      {/* Favorite Coins Table */}
+      {/* === Top Bar for Coin Selection === */}
+      <div className=" margin-left-10-per margin-bottom-4">
+        {favoriteCoins.length > 4 ? (
+          // Show dropdown if more than 4 favorite coins
+          <select
+            value={activeCoin || ""}
+            onChange={(e) => setActiveCoin(e.target.value)}
+            className="coin-dropdown"
+          >
+            {favoriteCoins.map((coin) => (
+              <option key={coin} value={coin}>
+                {coin.toUpperCase()}
+              </option>
+            ))}
+          </select>
+        ) : (
+          // Show coin buttons if <= 4 favorite coins
+          favoriteCoins.map((coin) => (
+            <button
+              key={coin}
+              onClick={() => setActiveCoin(coin)}
+              className={`coin-button ${activeCoin === coin ? "active" : ""}`}
+            >
+              {coin.toUpperCase()}
+            </button>
+          ))
+        )}
+      </div>
+
+      {/* === Favorite Coins Table === */}
       <div className="favorite-coins desktop-width">
-        {coinData.length > 0 ? (
+        {coinData?.length > 0 ? (
           <table className="crypto-table">
             <thead>
               <tr>
@@ -88,23 +130,35 @@ const Research: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {coinData.map((coin, index) => (
-                <tr key={coin.id}>
-                  <td>{index + 1}</td>
-                  <td className="crypto-name">
-                    <img src={coin.image} alt={coin.name} className="crypto-image" />
-                    <Link to={`/coin/${coin.id}`} className="crypto-link">
-                      {coin.name}
-                    </Link>
-                  </td>
-                  <td>{coin.symbol.toUpperCase()}</td>
-                  <td>${coin.current_price.toLocaleString()}</td>
-                  <td className={coin.price_change_percentage_24h >= 0 ? "price-positive" : "price-negative"}>
-                    {coin.price_change_percentage_24h.toFixed(2)}%
-                  </td>
-                  <td>${coin.market_cap.toLocaleString()}</td>
-                </tr>
-              ))}
+              {coinData
+                .filter((coin) => coin.symbol === activeCoin) // Only show active coin
+                .map((coin, index) => (
+                  <tr key={coin.id}>
+                    <td>{index + 1}</td>
+                    <td className="crypto-name">
+                      <img
+                        src={coin.image}
+                        alt={coin.name}
+                        className="crypto-image"
+                      />
+                      <Link to={`/coin/${coin.id}`} className="crypto-link">
+                        {coin.name}
+                      </Link>
+                    </td>
+                    <td>{coin.symbol.toUpperCase()}</td>
+                    <td>${coin.current_price.toLocaleString()}</td>
+                    <td
+                      className={
+                        coin.price_change_percentage_24h >= 0
+                          ? "price-positive"
+                          : "price-negative"
+                      }
+                    >
+                      {coin.price_change_percentage_24h.toFixed(2)}%
+                    </td>
+                    <td>${coin.market_cap.toLocaleString()}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         ) : (
@@ -112,7 +166,7 @@ const Research: React.FC = () => {
         )}
       </div>
 
-      {/* News Section Using CarouselSection */}
+      {/* === News Section === */}
       <CarouselSection
         title="Latest News on Your Favorite Coins"
         items={news.map((article) => ({
@@ -126,7 +180,7 @@ const Research: React.FC = () => {
         type="news"
       />
 
-      {/* Videos Section Using CarouselSection */}
+      {/* === Videos Section === */}
       <CarouselSection
         title="Latest Crypto Videos"
         items={videos.map((video) => ({

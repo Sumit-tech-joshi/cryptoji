@@ -4,10 +4,11 @@ import axios from "axios";
 const fetchWithCache = async (
   key: string,
   apiUrl: string,
-  cacheTime: number = 6000
+  cacheTime: number = 6
 ) => {
   const now = new Date().getTime();
   const cachedData = localStorage.getItem(key);
+  console.log({ key, apiUrl})
 
   if (cachedData) {
     const { data, timestamp } = JSON.parse(cachedData);
@@ -34,19 +35,22 @@ const fetchWithCache = async (
 };
 
 // Fetch Coins
-export const getCoins = async () => {
-  return await fetchWithCache("crypto-coins", "http://localhost:3001/api/coins");
+export const getCoins = async (q = '') => {
+  let query = q || "crypto-coins";
+  return await fetchWithCache(query || "crypto-coins", `http://localhost:3001/api/coins?q=${encodeURIComponent(query)}`);
 };
 
 // Fetch News
-export const getNews = async () => {
-  return await fetchWithCache("crypto-news", "http://localhost:3001/api/news");
+export const getNews = async (q = '') => {
+  let query = q || "crypto-news";
+  return await fetchWithCache(query || "crypto-news", `http://localhost:3001/api/news?q=${encodeURIComponent(query)}`);
 };
 
 // Fetch YouTube Videos
-export const getVideos = async () => {
+export const getVideos = async (query = '') => {
   return await fetchWithCache(
     "crypto-videos",
-    "http://localhost:3001/api/youtube?q=cryptocurrency"
+    `http://localhost:3001/api/youtube?q=${query}`,
+    
   );
 };
