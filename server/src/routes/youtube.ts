@@ -1,24 +1,33 @@
 import { Router } from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import Cache from '../models/cache';
 
 dotenv.config();
 
 const router = Router();
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+const YOUTUBE_API_KEY = process.env.YOUTUBE_BACKUP_API;
 
 router.get('/', async (req: any, res: any) => {
+  const query = req.query.q || 'cryptocurrency';
+  const cacheKey = `youtube_${query}`; // Unique cache key per query
+
   try {
-    const query = req.query.q || 'cryptocurrency';
-    const response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
-      params: {
-        part: 'snippet',
-        q: query,
-        key: YOUTUBE_API_KEY,
-        type: 'video',
-        maxResults: 5
-      }
+    // Check Cache First
+    const cachedData = await Cache.findOne({ key: cacheKey });
+
+    if (cachedData) {
+      console.log('Serving YouTube videos from Cache');
+      return res.json(cachedData.data);
+    }
+
+    // Fetch Fresh Data
+    const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+      params: { part: 'snippet', q: query, key: YOUTUBE_API_KEY, type: 'video', maxResults: 12 }
     });
+
+    // Store in Cache
+    await Cache.create({ key: cacheKey, data: response.data.items });
 
     return res.json(response.data.items);
   } catch (error) {
