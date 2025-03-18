@@ -72,7 +72,7 @@ const Research: React.FC = () => {
         );
         setCoinData(filteredCoins);
 
-        let selectedCoinName = filteredCoins.filter(
+        let selectedCoinName = filteredCoins?.filter(
           (coin: Coin) => coin.symbol == activeCoin
         )?.[0]?.name;
         setSelectedCoin(selectedCoinName);
@@ -193,7 +193,7 @@ const Research: React.FC = () => {
 
           {loading ? (
             <div className="ai-loader-wrapper">
-            <img src={aiLoader} width="200" className="text-align-center" alt="AI loader"/>
+            <img src={aiLoader} width="200" className="text-align-center" alt="AI loader" loading="lazy"/>
             </div>
           ) : (
             <div className="ai-insights-container">

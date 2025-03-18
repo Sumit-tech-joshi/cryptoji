@@ -2,11 +2,11 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 
 // Import default images
-import crypto1 from "../assets/crypto_01.jpg";
-import crypto2 from "../assets/crypto_02.jpg";
-import crypto3 from "../assets/crypto_03.jpg";
-import crypto4 from "../assets/crypto_04.jpg";
-import crypto5 from "../assets/crypto_05.jpg";
+import crypto1 from "../assets/crypto_01.webp";
+import crypto2 from "../assets/crypto_02.webp";
+import crypto3 from "../assets/crypto_03.webp";
+import crypto4 from "../assets/crypto_04.webp";
+import crypto5 from "../assets/crypto_05.webp";
 
 interface CarouselItem {
   id: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
-import heroImage from "../assets/hero.png";
+import heroImage from "../assets/hero.webp";
 import NavBar from "../components/navbar.tsx"; // Ensure correct import path
 import { useUser } from "@clerk/clerk-react"; // Clerk User Hook
 
@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Hero Image */}
-        <div className="hero-image">
+        <div className="hero-image"> 
           <img src={heroImage} alt="Crypto Hero" />
         </div>
       </div>

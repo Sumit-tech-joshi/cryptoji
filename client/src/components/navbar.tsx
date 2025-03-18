@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import logoDefault from "../assets/logo.png"; // Default logo
-import logoScrolled from "../assets/logo-black.png"; // Logo when scrolled
+import logoDefault from "../assets/logo.webp"; // Default logo
+import logoScrolled from "../assets/logo-black.webp"; // Logo when scrolled
 
 const NavBar: React.FC<{ onlyDefaultLogo: boolean }> = ({
   onlyDefaultLogo,

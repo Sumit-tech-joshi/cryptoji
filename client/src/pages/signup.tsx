@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { SignUp, useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/logo-black.png";
+import logo from "../assets/logo-black.webp";
 
 interface Coin {
   id: string;
@@ -61,7 +61,7 @@ const SignUpPage: React.FC = () => {
 
   return (
     <div className="auth-container text-align-center margin-top-5">
-      <img src={logo} className="crypto-logo" />
+      <img src={logo} className="crypto-logo" loading="lazy" />
       <h1 className="margin-bottom-6">Create Your CryptoJi Account</h1>
 
       <div className="favorite-coins-section margin-top-5">
@@ -79,7 +79,7 @@ const SignUpPage: React.FC = () => {
             <ul className="coin-search-dropdown">
               {filteredCoins.map((coin) => (
                 <li key={coin.id} onClick={() => addFavoriteCoin(coin.symbol)}>
-                  <img src={coin.image} alt={coin.name} className="coin-icon" />{" "}
+                  <img src={coin.image} alt={coin.name} className="coin-icon"  loading="lazy"/>{" "}
                   {coin.name} ({coin.symbol})
                 </li>
               ))}
