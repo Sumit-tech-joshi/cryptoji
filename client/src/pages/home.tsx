@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../App.css"; // Import the global stylesheet
 import Hero from "../components/hero.tsx";
 import { useUser } from "@clerk/clerk-react"; // Clerk User Hook
@@ -164,7 +163,7 @@ const Home: React.FC = () => {
     <div className="home-container ">
       {/* Hero component */}
       <Hero></Hero>
-      <h1 className="home-title margin-top-8 ">Top Cryptocurrencies</h1>
+      <h2 className="home-title margin-top-8 ">Top Cryptocurrencies</h2>
       <table className="crypto-table desktop-width">
         <thead>
           <tr>
@@ -182,11 +181,9 @@ const Home: React.FC = () => {
             <tr key={coin.id} className="crypto-row">
               <td>{index + 1}</td>
               <td className="crypto-name">
-                <img
-                  src={coin.image}
-                  alt={coin.name}
-                  className="crypto-image"
-                />
+        
+                <img src={coin.image} alt={coin.name} className="crypto-image" loading="lazy" />
+
                 <Link to={`/coin/${coin.id}`} className="crypto-link">
                   {coin.name}
                 </Link>
@@ -211,9 +208,9 @@ const Home: React.FC = () => {
                   onClick={() => toggleFavorite(coin.symbol)}
                 >
                   {favoriteCoins.includes(coin.symbol) ? (
-                    <img src={starFillIcon}></img>
+                    <img src={starFillIcon} loading="lazy" alt="start fill"></img>
                   ) : (
-                    <img src={starIcon}></img>
+                    <img src={starIcon} loading="lazy" alt="start no fill" ></img>
                   )}
                 </button>
               </td>
