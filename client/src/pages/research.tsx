@@ -188,76 +188,72 @@ const Research: React.FC = () => {
 
        {/* AI Insights Section */}
        {selectedCoin && (
-        <div className="desktop-width margin-top-6 ai-container">
-          <h2 className="">AI Insights for {selectedCoin}</h2>
+  <div className="desktop-width margin-top-6 ai-container">
+    <h2 className="ai-header">📊 AI Insights for {selectedCoin}</h2>
 
-          {loading ? (
-            <div className="ai-loader-wrapper">
-            <img src={aiLoader} width="200" className="text-align-center" alt="AI loader" loading="lazy"/>
+    {loading ? (
+      <div className="ai-loader-wrapper">
+        <img src={aiLoader} width="200" className="text-align-center" alt="AI loader" loading="lazy"/>
+      </div>
+    ) : (
+      <div className="ai-insights-container">
+        {aiInsights && aiInsights.investment_recommendation ? (
+          <div className="ai-grid">
+            
+            {/* 📊 Investment Summary */}
+            <div className="ai-box investment-summary">
+              <h4 className="ai-section-title">💰 Investment Recommendation</h4>
+              <p className="ai-text"><strong>Risk Level:</strong> {aiInsights.investment_recommendation.risk_level}</p>
+              <p className="ai-text"><strong>Reason:</strong> {aiInsights.investment_recommendation.reason}</p>
             </div>
-          ) : (
-            <div className="ai-insights-container">
-              {aiInsights && aiInsights.investment_recommendation ? (
-                <>
-                  {/* Investment Summary */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">Investment Recommendation</h4>
-                    <p className="ai-text"><strong>📊 Risk Level:</strong> {aiInsights.investment_recommendation.risk_level}</p>
-                    <p className="ai-text"><strong>💡 Reason:</strong> {aiInsights.investment_recommendation.reason}</p>
-                  </div>
-      
-                  {/* Market Summary */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">📈 Market Overview</h4>
-                    <p className="ai-text"><strong>🔍 Sentiment:</strong> {aiInsights.market_summary?.overview}</p>
-                    <p className="ai-text"><strong>📊 6-12 Month Trend:</strong> {aiInsights.market_summary?.price_trend}</p>
-                    <p className="ai-text"><strong>🐋 Whale Activity:</strong> {aiInsights.market_summary?.whale_activity}</p>
-                  </div>
-      
-                  {/* Key Market Factors */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">🔎 Key Market Factors</h4>
-                    <ul className="ai-market-factors">
-                      {aiInsights.key_market_factors?.map((factor, index) => (
-                        <li key={index} className="ai-market-factor">
-                          <strong>{factor.title}:</strong> {factor.description}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-      
-                  {/* Recent News */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">📰 Latest Market News</h4>
-                    <p className="ai-text">{aiInsights.recent_news?.description}</p>
-                  </div>
-      
-                  {/* Future Predictions */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">🔮 Future Predictions</h4>
-                    <p className="ai-text">{aiInsights.future_predictions?.description}</p>
-                  </div>
-      
-                  {/* Risks */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">⚠️ Potential Risks</h4>
-                    <p className="ai-text">{aiInsights.potential_risks?.description}</p>
-                  </div>
-      
-                  {/* Investment Insights */}
-                  <div className="ai-box">
-                    <h4 className="ai-section-title">💰 Investment Insights</h4>
-                    <p className="ai-text">{aiInsights.investment_insights?.description}</p>
-                  </div>
-      
-                </>
-              )  : (
-            <p className="text-red-500">Error fetching insights.</p>
-          )}
+
+            {/* 📈 Market Overview */}
+            <div className="ai-box market-overview">
+              <h4 className="ai-section-title">📈 Market Overview</h4>
+              <p className="ai-text"><strong>Sentiment:</strong> {aiInsights.market_summary?.overview}</p>
+              <p className="ai-text"><strong>6-12 Month Trend:</strong> {aiInsights.market_summary?.price_trend}</p>
+              <p className="ai-text"><strong>Whale Activity:</strong> {aiInsights.market_summary?.whale_activity}</p>
             </div>
-          )}
-        </div>
-      )}
+
+            {/* 🔎 Key Market Factors */}
+            <div className="ai-box key-factors">
+              <h4 className="ai-section-title">🔎 Key Market Factors</h4>
+              <ul className="ai-market-factors">
+                {aiInsights.key_market_factors?.map((factor, index) => (
+                  <li key={index} className="ai-market-factor">
+                    <strong>{factor.title}:</strong> {factor.description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* 📰 Latest News */}
+            <div className="ai-box news-section">
+              <h4 className="ai-section-title">📰 Latest Market News</h4>
+              <p className="ai-text">{aiInsights.recent_news?.description}</p>
+            </div>
+
+            {/* 🔮 Future Predictions */}
+            <div className="ai-box predictions">
+              <h4 className="ai-section-title">🔮 Future Predictions</h4>
+              <p className="ai-text">{aiInsights.future_predictions?.description}</p>
+            </div>
+
+            {/* ⚠️ Potential Risks */}
+            <div className="ai-box risks">
+              <h4 className="ai-section-title">⚠️ Potential Risks</h4>
+              <p className="ai-text">{aiInsights.potential_risks?.description}</p>
+            </div>
+
+          </div>
+        ) : (
+          <p className="text-red-500">Error fetching insights.</p>
+        )}
+      </div>
+    )}
+  </div>
+)}
+
 
       {/* === News Section === */}
       <CarouselSection
