@@ -3,6 +3,8 @@ import { useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import CarouselSection from "../components/carouselSection";
+import PriceChart from "../components/PriceChart";
+
 import {
   getCoins,
   getNews,
@@ -53,6 +55,8 @@ const Research: React.FC = () => {
   const [aiInsights, setAiInsights] = useState<any>({});
   const [selectedCoin, setSelectedCoin] = useState("");
   const [loading, setLoading] = useState(false);
+  const [chartPrices, setChartPrices] = useState<number[]>([]);
+  const [chartLabels, setChartLabels] = useState<string[]>([]);
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -187,6 +191,13 @@ const Research: React.FC = () => {
           <p>No favorite coins yet. Add some from the home page!</p>
         )}
       </div>
+
+      {/* Price Chart */}
+      {selectedCoin && (
+        <div className="desktop-width margin-top-6">
+          <PriceChart coinId={selectedCoin.toLowerCase()} title={`Price Chart for ${selectedCoin}`} />
+        </div>
+      )}
 
       {/* AI Insights Section */}
       {selectedCoin && (
