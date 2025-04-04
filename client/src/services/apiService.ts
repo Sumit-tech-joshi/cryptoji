@@ -13,6 +13,8 @@ const generationConfig = {
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 };
+
+
 // Cache Helper Function
 const fetchWithCache = async (
   key: string,
@@ -46,10 +48,12 @@ const fetchWithCache = async (
   }
 };
 
+
 // Function to clean Markdown-wrapped JSON before parsing
 const cleanMarkdownJSON = (text) => {
   return text.replace(/```json\n?([\s\S]*?)\n?```/g, "$1").trim();
 };
+
 
 // Function to get AI insights for a cryptocurrency
 export const getAIInsights = async (coinName) => {
@@ -83,6 +87,7 @@ export const getAIInsights = async (coinName) => {
   }
 };
 
+
 // Fetch Coins
 export const getCoins = async (q = "") => {
   let query = q || "crypto-coins";
@@ -90,6 +95,11 @@ export const getCoins = async (q = "") => {
     query || "crypto-coins",
     `http://localhost:3001/api/coins?q=${encodeURIComponent(query)}`
   );
+};
+
+export const getCoinChart = async (coinId: string, days: string) => {
+  const response = await fetch(`http://localhost:3001/api/chart/${coinId}?days=${days}`);
+  return await response.json();
 };
 
 // Fetch News
@@ -100,6 +110,7 @@ export const getNews = async (q = "") => {
     `http://localhost:3001/api/news?q=${encodeURIComponent(query)}`
   );
 };
+
 
 // Fetch YouTube Videos
 export const getVideos = async (query = "") => {
