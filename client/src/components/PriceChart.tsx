@@ -77,7 +77,8 @@ const PriceChart: React.FC<PriceChartProps> = ({ coinId, title }) => {
 
   useEffect(() => {
     fetchChartData();
-  }, [selectedRange]);
+  }, [selectedRange, coinId]);
+
 
   return (
     <div className="chart-container">
@@ -97,7 +98,9 @@ const PriceChart: React.FC<PriceChartProps> = ({ coinId, title }) => {
       </div>
 
       {loading ? (
+        <div className="coin-loader-wrapper">
         <video src={chartLoader} autoPlay loop muted width="120" />
+        </div>
       ) : (
         chartData && <Line data={chartData} />
       )}
