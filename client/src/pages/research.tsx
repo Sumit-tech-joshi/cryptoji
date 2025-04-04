@@ -260,7 +260,7 @@ const Research: React.FC = () => {
 
                   {/* Key Market Factors */}
                   <div className="ai-box key-factors">
-                    <h4 className="ai-section-title">🔎 Key Market Factors</h4>
+                    <h4 className="ai-section-title"> Key Market Factors</h4>
                     <ul className="ai-market-factors">
                       {aiInsights.key_market_factors?.map((factor, index) => (
                         <li key={index} className="ai-market-factor">
@@ -299,10 +299,10 @@ const Research: React.FC = () => {
                     </ul>
                   </div>
 
-                  {/* ⚠️ Risks */}
+                  {/*  Risks */}
                   <div className="ai-box risks">
                     <h4 className="ai-section-title">
-                      ⚠️ {aiInsights.potential_risks?.title}
+                      {aiInsights.potential_risks?.title}
                     </h4>
                     <ul className="ai-list">
                       {aiInsights.potential_risks?.points?.map((item, idx) => (
