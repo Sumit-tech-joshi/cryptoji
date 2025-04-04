@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import coinRoutes from './routes/coins';
 import newsRoutes from './routes/news';
 import youtubeRoutes from './routes/youtube';
-
+import chartRoutes from './routes/chart';
 dotenv.config();
 
 const app = express();
@@ -25,6 +25,7 @@ mongoose.connect(MONGO_URI, { dbName: 'cryptoDB' })
 app.use('/api/coins', coinRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/youtube', youtubeRoutes);
+app.use('/api/chart', chartRoutes);
 
 app.get('/', (req, res) => {
   res.send('CryptoJi Server is running...');
