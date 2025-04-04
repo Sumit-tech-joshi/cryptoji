@@ -657,6 +657,50 @@ body {
   cursor: pointer;
 }
 
+/* Chart */
+
+.chart-container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.chart-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.filter-btn.active {
+  background-color: #ffa500;
+  color: white;
+  border-color: #ffa500;
+}
+
+.chart-loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+
 /* ==================== AI Insights Styling ==================== */
 
 /* Container */
