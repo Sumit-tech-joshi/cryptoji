@@ -191,7 +191,7 @@ const Research: React.FC = () => {
       {/* AI Insights Section */}
       {selectedCoin && (
         <div className="desktop-width margin-top-6 ai-container">
-          <h2 className="ai-header">📊 AI Insights for {selectedCoin}</h2>
+          <h2 className="ai-header"> AI Insights for {selectedCoin}</h2>
 
           {loading ? (
             <div className="ai-loader-wrapper">
@@ -207,10 +207,10 @@ const Research: React.FC = () => {
             <div className="ai-insights-container">
               {aiInsights && aiInsights.investment_recommendation ? (
                 <div className="ai-grid">
-                  {/* 📊 Investment Summary */}
+                  {/* Investment Summary */}
                   <div className="ai-box investment-summary">
                     <h4 className="ai-section-title">
-                      💰 Investment Recommendation
+                      Investment Recommendation
                     </h4>
                     <ul className="ai-list">
                       <li className="ai-list-item">
@@ -235,9 +235,9 @@ const Research: React.FC = () => {
                     </ul>
                   </div>
 
-                  {/* 📈 Market Overview */}
+                  {/* Market Overview */}
                   <div className="ai-box market-overview">
-                    <h4 className="ai-section-title">📈 Market Overview</h4>
+                    <h4 className="ai-section-title"> Market Overview</h4>
                     <ul className="ai-list">
                       <li className="ai-list-item">
                         <strong>Sentiment:</strong>{" "}
@@ -258,7 +258,7 @@ const Research: React.FC = () => {
                     </ul>
                   </div>
 
-                  {/* 🔎 Key Market Factors */}
+                  {/* Key Market Factors */}
                   <div className="ai-box key-factors">
                     <h4 className="ai-section-title">🔎 Key Market Factors</h4>
                     <ul className="ai-market-factors">
@@ -272,7 +272,7 @@ const Research: React.FC = () => {
 
                   <div className="ai-box news-section">
                     <h4 className="ai-section-title">
-                      📰 {aiInsights.recent_news?.title}
+                       {aiInsights.recent_news?.title}
                     </h4>
                     <ul className="ai-list">
                       {aiInsights.recent_news?.points?.map((item, idx) => (
@@ -283,10 +283,10 @@ const Research: React.FC = () => {
                     </ul>
                   </div>
 
-                  {/* 🔮 Future Predictions */}
+                  {/*  Future Predictions */}
                   <div className="ai-box predictions">
                     <h4 className="ai-section-title">
-                      🔮 {aiInsights.future_predictions?.title}
+                       {aiInsights.future_predictions?.title}
                     </h4>
                     <ul className="ai-list">
                       {aiInsights.future_predictions?.points?.map(
