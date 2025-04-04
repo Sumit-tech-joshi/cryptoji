@@ -620,6 +620,7 @@ body {
 
 .user-title {
   margin-top: 10%;
+  font-size: 3.1rem;
 }
 
 /* === Top Bar Styling === */
@@ -681,7 +682,6 @@ body {
   background: #ffffff;
   border-radius: var(--border-radius-medium);
   padding: 1.5rem;
-  height: 350px; /* Slightly increased */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -691,7 +691,9 @@ body {
   text-align: left;
 }
 
-
+.ai-header {
+  font-size: 3.0rem;
+}
 /*  Hover Effect */
 .ai-box:hover {
   transform: translateY(-5px);
