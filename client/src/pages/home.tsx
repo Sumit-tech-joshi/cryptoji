@@ -205,9 +205,9 @@ const Home: React.FC = () => {
               <td>
                 <button
                   className="fav-btn"
-                  onClick={() => toggleFavorite(coin.symbol)}
+                  onClick={() => toggleFavorite(coin.id)}
                 >
-                  {favoriteCoins.includes(coin.symbol) ? (
+                  {favoriteCoins.includes(coin.id) ? (
                     <img src={starFillIcon} loading="lazy" alt="start fill"></img>
                   ) : (
                     <img src={starIcon} loading="lazy" alt="start no fill" ></img>
