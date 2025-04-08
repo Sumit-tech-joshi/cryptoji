@@ -36,7 +36,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ coinId, title }) => {
     "1": "1 Day",
     "30": "30 Days",
     "365": "1 Year",
-    max: "All Time",
+    "400": "All Time",
   };
 
   const fetchChartData = async () => {
@@ -102,7 +102,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ coinId, title }) => {
         <video src={chartLoader} autoPlay loop muted width="120" />
         </div>
       ) : (
-        chartData && <Line data={chartData} />
+        chartData && <Line key={selectedRange} data={chartData} />
       )}
     </div>
   );
