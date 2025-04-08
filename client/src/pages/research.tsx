@@ -10,6 +10,7 @@ import {
   getNews,
   getVideos,
   getAIInsights,
+  getCoin,
 } from "../services/apiService";
 import aiLoader from "../assets/loader_ai.gif";
 
@@ -48,15 +49,12 @@ interface YouTubeVideo {
 const Research: React.FC = () => {
   const { user, isLoaded } = useUser();
   const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
-  const [coinData, setCoinData] = useState<Coin[]>([]);
+  const [coinData, setCoinData] = useState<Coin>();
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [activeCoin, setActiveCoin] = useState<string | null>(null);
   const [aiInsights, setAiInsights] = useState<any>({});
-  const [selectedCoin, setSelectedCoin] = useState("");
   const [loading, setLoading] = useState(false);
-  const [chartPrices, setChartPrices] = useState<number[]>([]);
-  const [chartLabels, setChartLabels] = useState<string[]>([]);
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -72,22 +70,13 @@ const Research: React.FC = () => {
   }, [isLoaded, user]);
 
   useEffect(() => {
-    if (favoriteCoins.length > 0) {
-      // Fetch favorite coin data
-      getCoins().then((data) => {
-        const filteredCoins = data?.filter((coin: Coin) =>
-          favoriteCoins.includes(coin.symbol)
-        );
-        setCoinData(filteredCoins);
-
-        let selectedCoinName = filteredCoins?.filter(
-          (coin: Coin) => coin.symbol == activeCoin
-        )?.[0]?.name;
-        setSelectedCoin(selectedCoinName);
-        const insights = fetchInsights(selectedCoinName);
+    if (activeCoin) {
+      getCoin(activeCoin).then((data) => {
+        setCoinData(data);
+        const insights = fetchInsights(data.name);
         setAiInsights(insights);
-        getNews(selectedCoinName).then((data) => setNews(data?.results || []));
-        getVideos(selectedCoinName).then((data) => setVideos(data || []));
+        getNews(data.name).then((data) => setNews(data?.results || []));
+        getVideos(data.name).then((data) => setVideos(data || []));
       });
     }
   }, [favoriteCoins, activeCoin]);
@@ -143,7 +132,7 @@ const Research: React.FC = () => {
 
       {/* === Favorite Coins Table === */}
       <div className="favorite-coins desktop-width">
-        {coinData?.length > 0 ? (
+        {coinData && coinData.id ? (
           <table className="crypto-table">
             <thead>
               <tr>
@@ -156,35 +145,31 @@ const Research: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {coinData
-                .filter((coin) => coin.symbol === activeCoin) // Only show active coin
-                .map((coin, index) => (
-                  <tr key={coin.id}>
-                    <td>{index + 1}</td>
-                    <td className="crypto-name">
-                      <img
-                        src={coin.image}
-                        alt={coin.name}
-                        className="crypto-image"
-                      />
-                      <Link to={`/coin/${coin.id}`} className="crypto-link">
-                        {coin.name}
-                      </Link>
-                    </td>
-                    <td>{coin.symbol.toUpperCase()}</td>
-                    <td>${coin.current_price.toLocaleString()}</td>
-                    <td
-                      className={
-                        coin.price_change_percentage_24h >= 0
-                          ? "price-positive"
-                          : "price-negative"
-                      }
-                    >
-                      {coin.price_change_percentage_24h.toFixed(2)}%
-                    </td>
-                    <td>${coin.market_cap.toLocaleString()}</td>
-                  </tr>
-                ))}
+              <tr key={coinData.id}>
+                <td>1</td>
+                <td className="crypto-name">
+                  <img
+                    src={coinData.image.small}
+                    alt={coinData.name}
+                    className="crypto-image"
+                  />
+                  <Link to={`/coin/${coinData.id}`} className="crypto-link">
+                    {coinData.name}
+                  </Link>
+                </td>
+                <td>{coinData.id.toUpperCase()}</td>
+                <td>${coinData.market_data?.current_price?.usd?.toLocaleString()}</td>
+                <td
+                  className={
+                    coinData.price_change_percentage_24h >= 0
+                      ? "price-positive"
+                      : "price-negative"
+                  }
+                >
+                  {coinData?.market_data?.market_cap_change_24h.toFixed(2)}%
+                </td>
+                <td>${coinData.market_data?.market_cap?.usd.toLocaleString()}</td>
+              </tr>
             </tbody>
           </table>
         ) : (
@@ -193,16 +178,19 @@ const Research: React.FC = () => {
       </div>
 
       {/* Price Chart */}
-      {selectedCoin && (
+      {coinData && (
         <div className="desktop-width margin-top-6">
-          <PriceChart coinId={selectedCoin.toLowerCase()} title={`Price Chart for ${selectedCoin}`} />
+          <PriceChart
+            coinId={coinData.id}
+            title={`Price Chart for ${coinData.name}`}
+          />
         </div>
       )}
 
       {/* AI Insights Section */}
-      {selectedCoin && (
+      {coinData && (
         <div className="desktop-width margin-top-6 ai-container">
-          <h2 className="ai-header"> AI Insights for {selectedCoin}</h2>
+          <h2 className="ai-header"> AI Insights for {coinData.name}</h2>
 
           {loading ? (
             <div className="ai-loader-wrapper">
@@ -283,7 +271,7 @@ const Research: React.FC = () => {
 
                   <div className="ai-box news-section">
                     <h4 className="ai-section-title">
-                       {aiInsights.recent_news?.title}
+                      {aiInsights.recent_news?.title}
                     </h4>
                     <ul className="ai-list">
                       {aiInsights.recent_news?.points?.map((item, idx) => (
@@ -297,7 +285,7 @@ const Research: React.FC = () => {
                   {/*  Future Predictions */}
                   <div className="ai-box predictions">
                     <h4 className="ai-section-title">
-                       {aiInsights.future_predictions?.title}
+                      {aiInsights.future_predictions?.title}
                     </h4>
                     <ul className="ai-list">
                       {aiInsights.future_predictions?.points?.map(
