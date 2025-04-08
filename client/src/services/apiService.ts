@@ -97,6 +97,13 @@ export const getCoins = async (q = "") => {
   );
 };
 
+export const getCoin = async (coinID) => {
+  return await fetchWithCache(
+    `crypto-coin-data-${coinID}`,
+    `http://localhost:3001/api/coins/${coinID}`
+  );
+};
+
 export const getCoinChart = async (coinId: string, days: string) => {
   const response = await fetch(`http://localhost:3001/api/chart/${coinId}?days=${days}`);
   return await response.json();
