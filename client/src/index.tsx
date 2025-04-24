@@ -9,10 +9,8 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-
 // Need to remove this and use it from env file
-const PUBLISHABLE_KEY =
-  "pk_test_c21pbGluZy1wdW1hLTEzLmNsZXJrLmFjY291bnRzLmRldiQ";
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
   throw new Error("Add your Clerk Publishable Key to the .env.local file");

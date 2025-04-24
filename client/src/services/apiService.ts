@@ -2,8 +2,7 @@ import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import getCryptoAnalysisPrompt from "../components/cryptoAnalysisPrompt";
 
-const GEMINI_API_KEY = 'AIzaSyD_5J2BZ-yhpUzbHsV8If6obDPUKbFeo1w';
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 const generationConfig = {

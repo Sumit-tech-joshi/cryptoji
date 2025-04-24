@@ -73,10 +73,10 @@ const Research: React.FC = () => {
     if (activeCoin) {
       getCoin(activeCoin).then((data) => {
         setCoinData(data);
-        const insights = fetchInsights(data.name);
+        const insights = fetchInsights(data?.name);
         setAiInsights(insights);
-        getNews(data.name).then((data) => setNews(data?.results || []));
-        getVideos(data.name).then((data) => setVideos(data || []));
+        getNews(data?.name).then((data) => setNews(data?.results || []));
+        getVideos(data?.name).then((data) => setVideos(data || []));
       });
     }
   }, [favoriteCoins, activeCoin]);
@@ -150,11 +150,11 @@ const Research: React.FC = () => {
                 <td className="crypto-name">
                   <img
                     src={coinData.image.small}
-                    alt={coinData.name}
+                    alt={coinData?.name}
                     className="crypto-image"
                   />
                   <Link to={`/coin/${coinData.id}`} className="crypto-link">
-                    {coinData.name}
+                    {coinData?.name}
                   </Link>
                 </td>
                 <td>{coinData.id.toUpperCase()}</td>
@@ -182,7 +182,7 @@ const Research: React.FC = () => {
         <div className="desktop-width margin-top-6">
           <PriceChart
             coinId={coinData.id}
-            title={`Price Chart for ${coinData.name}`}
+            title={`Price Chart for ${coinData?.name}`}
           />
         </div>
       )}
@@ -190,7 +190,7 @@ const Research: React.FC = () => {
       {/* AI Insights Section */}
       {coinData && (
         <div className="desktop-width margin-top-6 ai-container">
-          <h2 className="ai-header"> AI Insights for {coinData.name}</h2>
+          <h2 className="ai-header"> AI Insights for {coinData?.name}</h2>
 
           {loading ? (
             <div className="ai-loader-wrapper">
