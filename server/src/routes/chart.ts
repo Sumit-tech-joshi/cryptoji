@@ -37,7 +37,7 @@ router.get('/:coinId', async (req: any, res: any) => {
     return res.json(response.data);
   } catch (error) {
     console.error('Chart API error:', error);
-    res.status(500).json({ error: 'Chart data fetch failed' });
+    res.status(500).json({ error: `Chart data fetch failed:  ${error}` });
   }
 });
 

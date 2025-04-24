@@ -62,7 +62,7 @@ router.get('/:id', async (req: any, res: any) => {
     return res.json(response.data);
   } catch (error) {
     console.error('Error fetching coin data:', error);
-    return res.status(500).json({ error: 'Failed to fetch coin data' });
+    return res.status(500).json({ error: `Failed to fetch coin data ::  ${error}` });
   }
 });
 
