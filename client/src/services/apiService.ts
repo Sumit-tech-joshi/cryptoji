@@ -93,19 +93,19 @@ export const getCoins = async (q = "") => {
   let query = q || "crypto-coins";
   return await fetchWithCache(
     query || "crypto-coins",
-    `http://localhost:3001/api/coins?q=${encodeURIComponent(query)}`
+    `https://cryptoji.onrender.com/api/coins?q=${encodeURIComponent(query)}`
   );
 };
 
 export const getCoin = async (coinID) => {
   return await fetchWithCache(
     `crypto-coin-data-${coinID}`,
-    `http://localhost:3001/api/coins/${coinID}`
+    `https://cryptoji.onrender.com/api/coins/${coinID}`
   );
 };
 
 export const getCoinChart = async (coinId: string, days: string) => {
-  const response = await fetch(`http://localhost:3001/api/chart/${coinId}?days=${days}`);
+  const response = await fetch(`https://cryptoji.onrender.com/api/chart/${coinId}?days=${days}`);
   return await response.json();
 };
 
@@ -114,7 +114,7 @@ export const getNews = async (q = "") => {
   let query = q || "crypto-news";
   return await fetchWithCache(
     query || "crypto-news",
-    `http://localhost:3001/api/news?q=${encodeURIComponent(query)}`
+    `https://cryptoji.onrender.com/api/news?q=${encodeURIComponent(query)}`
   );
 };
 
@@ -123,6 +123,6 @@ export const getNews = async (q = "") => {
 export const getVideos = async (query = "") => {
   return await fetchWithCache(
     "crypto-videos",
-    `http://localhost:3001/api/youtube?q=${query}`
+    `https://cryptoji.onrender.com/api/youtube?q=${query}`
   );
 };

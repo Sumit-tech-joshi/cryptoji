@@ -58,7 +58,7 @@ Create a `.env` file in both `client/` and `server/` directories with the follow
 #### Client (`client/.env`):
 ```env
 REACT_APP_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-REACT_APP_API_BASE_URL=http://localhost:3001
+REACT_APP_API_BASE_URL=https://cryptoji.onrender.com
 ```
 
 #### Server (`server/.env`):

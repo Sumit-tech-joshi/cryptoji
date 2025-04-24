@@ -22,7 +22,7 @@ const SignUpPage: React.FC = () => {
   useEffect(() => {
     localStorage.setItem("currentPage", "SignUp");
     axios
-      .get("http://localhost:3001/api/coins")
+      .get("https://cryptoji.onrender.com/api/coins")
       .then((res) => setCoins(res.data))
       .catch((err) => console.error(err));
   }, []);

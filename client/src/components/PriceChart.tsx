@@ -43,7 +43,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ coinId, title }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/chart/${coinId}?days=${selectedRange}`
+        `https://cryptoji.onrender.com/api/chart/${coinId}?days=${selectedRange}`
       );
       const prices = response.data.prices;
 
